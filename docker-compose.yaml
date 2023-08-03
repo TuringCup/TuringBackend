@@ -1,0 +1,43 @@
+version: '3'
+services:
+  db:
+    container_name: TuringDb
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=Turing_db
+      - MYSQL_USER=turing
+      - MYSQL_PASSWORD=123456
+      - TZ=Asia/Shanghai
+    # 通过config/sql下面的sql脚本初始化数据库
+    volumes:
+      - ./config/sql:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+  redis:
+    container_name: TuringRedis
+    image: redis
+    restart: always
+    environment:
+      - REDIS_PASSWORD=123456
+      - ALLOW_EMPTY_PASSWORD=no
+    volumes:
+      - ./data/redis:/usr/local/redis
+    ports:
+      - "6379:6379"
+    depends_on:
+      - db
+  turing:
+    container_name: TuringCupBackend
+    build: .
+    restart: always
+    links:
+      - redis
+      - db
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - redis
+  

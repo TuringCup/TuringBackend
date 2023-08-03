@@ -29,3 +29,5 @@ config/locales/config.yaml
 
 # macOS
 .DS_Store
+
+data
