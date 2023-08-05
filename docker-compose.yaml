@@ -1,43 +1,134 @@
 version: '3'
+networks:
+    turing:
+        driver: bridge
 services:
-  db:
-    container_name: TuringDb
-    image: mysql
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=Turing_db
-      - MYSQL_USER=turing
-      - MYSQL_PASSWORD=123456
-      - TZ=Asia/Shanghai
-    # 通过config/sql下面的sql脚本初始化数据库
-    volumes:
-      - ./config/sql:/docker-entrypoint-initdb.d/
-    ports:
-      - "3306:3306"
-  redis:
-    container_name: TuringRedis
-    image: redis
-    restart: always
-    environment:
-      - REDIS_PASSWORD=123456
-      - ALLOW_EMPTY_PASSWORD=no
-    volumes:
-      - ./data/redis:/usr/local/redis
-    ports:
-      - "6379:6379"
-    depends_on:
-      - db
-  turing:
-    container_name: TuringCupBackend
-    build: .
-    restart: always
-    links:
-      - redis
-      - db
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
-      - redis
-  
+    db:
+        container_name: TuringDb
+        image: mysql
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=Turing_db
+            - MYSQL_USER=turing
+            - MYSQL_PASSWORD=123456
+            - TZ=Asia/Shanghai
+        # 通过config/sql下面的sql脚本初始化数据库
+        volumes:
+            - ./config/sql:/docker-entrypoint-initdb.d/
+        ports:
+            - "3306:3306"
+        networks:
+            - turing
+    redis:
+        container_name: TuringRedis
+        image: redis
+        restart: always
+        environment:
+            - REDIS_PASSWORD=123456
+            - ALLOW_EMPTY_PASSWORD=no
+        volumes:
+            - ./data/redis:/usr/local/redis
+        ports:
+            - "6379:6379"
+        depends_on:
+            - db
+        networks:
+            - turing
+    turing:
+        container_name: TuringCupBackend
+        build: .
+        restart: always
+        links:
+            - redis
+            - db
+            - skywalking-oap
+        ports:
+            - "5001:5001"
+        depends_on:
+            - db
+            - redis
+            - skywalking-oap
+        networks:
+            - turing
+    # 监控系统
+    elasticsearch:
+        image: elasticsearch:8.4.2
+        container_name: elasticsearch
+        environment:
+            bootstrap.memory_lock: "true"
+            ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+            discovery.type: single-node
+            ingest.geoip.downloader.enabled: "false"
+            TZ: Asia/Shanghai
+            xpack.security.enabled: "false"
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -sf http://localhost:9200/_cluster/health || exit 1"
+                ] #⼼跳检测，成功之后不再执⾏后⾯的退出
+            interval: 10s #⼼跳检测间隔周期
+            timeout: 10s
+            retries: 3
+            start_period: 10s #⾸次检测延迟时间
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - /usr/local/elasticsearch/data:/usr/local/elasticsearch/data
+            - /usr/local/elasticsearch/config/es/config:/usr/local/elasticsearch/config
+        ports:
+            - "9200:9200"
+        restart: always
+        networks:
+            - turing
+    skywalking-oap:
+        image: apache/skywalking-oap-server:9.3.0
+        container_name: skywalking-oap
+        depends_on:
+            elasticsearch:
+                condition: service_healthy
+        links:
+            - elasticsearch
+        environment:
+            SW_HEALTH_CHECKER: default
+            SW_STORAGE: elasticsearch
+            SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+            JAVA_OPTS: "-Xms2048m -Xmx2048m"
+            TZ: Asia/Shanghai
+            SW_TELEMETRY: prometheus
+        healthcheck:
+            test: [ "CMD-SHELL", "/skywalking/bin/swctl ch" ]
+            interval: 5s
+            timeout: 10s
+            retries: 3
+            start_period: 5s
+        restart: on-failure
+        ports:
+            - "11800:11800"
+            - "12800:12800"
+        networks:
+            - turing
+    skywalking-ui:
+        image: apache/skywalking-ui:9.3.0
+        depends_on:
+            skywalking-oap:
+                condition: service_healthy
+        links:
+            - skywalking-oap
+        ports:
+            - "8080:8080"
+        environment:
+            SW_OAP_ADDRESS: http://skywalking-oap:12800
+            SW_HEALTH_CHECKER: default
+            TZ: Asia/Shanghai
+        healthcheck:
+            test: [ "CMD-SHELL", "curl -sf http://localhost:8080 || exit 1" ] #⼼跳检测，成功之后不再执⾏后⾯的退出
+            interval: 10s #⼼跳检测间隔周期
+            timeout: 10s
+            retries: 3
+            start_period: 10s #⾸次检测延迟时间
+        networks:
+            - turing

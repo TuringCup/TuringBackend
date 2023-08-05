@@ -10,12 +10,16 @@
 ```
 git clone https://github.com/TuringCup/TuringBackend.git
 cd TuringBackend
+docker compose pull
+docker compose build
 docker compose up -d
 ```
 #### Linux
 ```
 git clone https://github.com/TuringCup/TuringBackend.git
 cd TuringBackend
+sudo docker-compose pull
+sudo docker-compose build
 sudo docker-compose up -d
 ```
 
