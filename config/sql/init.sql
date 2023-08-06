@@ -7,8 +7,8 @@ create table turingcup.user (
 	email varchar(255) check (email like '%@%'),
 	school varchar(255) not null,
 	shcoolID varchar(255),
-	createTime datetime,
-	updateTime datetime,
+	createAt datetime,
+	updateAt datetime,
 	primary key(id)
 );
 
@@ -16,8 +16,8 @@ create table turingcup.user (
 create table turingcup.race (
 	id int auto_increment,
 	name varchar(32) not null,
-	createTime datetime,
-	updateTime datetime,
+	createAt datetime,
+	updateAt datetime,
 	primary key(id)
 );
 
@@ -27,8 +27,8 @@ create table turingcup.team (
 	rid int not null,
 	name varchar(32) not null,
 	capID int not null,
-	createTime datetime,
-	updateTime datetime,
+	createAt datetime,
+	updateAt datetime,
 	primary key(id)
 );
 
