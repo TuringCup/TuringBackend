@@ -23,7 +23,7 @@ sudo docker-compose build
 sudo docker-compose up -d
 ```
 
-等待一段时间后，项目成功运行，在浏览器访问http://localhost:8080/api/ping
+等待一段时间后，项目成功运行，在浏览器访问http://localhost:5001/api/ping
 
 如果看到`success`则表示项目运行成功
 ### 停止运行
