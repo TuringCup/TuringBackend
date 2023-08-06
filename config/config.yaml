@@ -1,0 +1,10 @@
+system:
+  host: localhost
+  port: 5001
+db:
+  host: db
+  port: 3306
+  dbName: turing
+  charset: utf8mb4
+  userName: root
+  password: TuringCupBackend123!@#
