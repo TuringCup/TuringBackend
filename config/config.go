@@ -6,15 +6,25 @@ import (
 	"github.com/spf13/viper"
 )
 
-var config *Config
+var Conf *Config
 
 type Config struct {
 	System *System `yaml:"system"`
+	DB     *DB     `yaml:"db"`
 }
 
 type System struct {
 	Host string `yaml:"host"`
 	Port string `yaml:"port"`
+}
+
+type DB struct {
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	DbName   string `yaml:"dbName"`
+	UserName string `yaml:"userName"`
+	Password string `yaml:"password"`
+	Charset  string `yaml:"charset"`
 }
 
 func InitConfig() {
@@ -27,7 +37,7 @@ func InitConfig() {
 	if err != nil {
 		panic(err)
 	}
-	err = viper.Unmarshal(&config)
+	err = viper.Unmarshal(&Conf)
 	if err != nil {
 		panic(err)
 	}
