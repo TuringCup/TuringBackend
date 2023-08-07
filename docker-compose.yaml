@@ -8,11 +8,11 @@ services:
         image: mysql
         restart: always
         environment:
-            MYSQL_RANDOM_ROOT_PASSWORD: yes
-            MYSQL_DATABASE: turingcup
-            TZ: Asia/Shanghai
-            MYSQL_USER: turing
-            MYSQL_PASSWORD: TuringCupBackend123@#$
+            - MYSQL_RANDOM_ROOT_PASSWORD=yes
+            - MYSQL_DATABASE=turingcup
+            - TZ=Asia/Shanghai
+            - MYSQL_USER=turing
+            - MYSQL_PASSWORD=TuringCupBackend123@#$
         # 通过config/sql下面的sql脚本初始化数据库
         volumes:
             - ./config/sql:/docker-entrypoint-initdb.d/
