@@ -22,10 +22,10 @@ jobs:
         go-version: '1.20'
     
     - name: Set up Environment
-      run: docker-compose up -d
+      run: sudo docker-compose up -d
 
     - name: Build
-      run: go build -v ./...
+      run: sudo go build -v ./...
 
     - name: Test
-      run: go test -v ./...
+      run: sudo go test -v ./...
