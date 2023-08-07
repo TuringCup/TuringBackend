@@ -8,8 +8,9 @@ import (
 
 type User struct {
 	gorm.Model
-	Id        int32 `gorm:"primaryKey;autoIncrement"`
+	ID        int32 `gorm:"primaryKey;autoIncrement"`
 	Name      string
+	Password  string
 	Email     string
 	Phone     string
 	School    string

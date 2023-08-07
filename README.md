@@ -1,41 +1,46 @@
 # TuringBackend
 图灵杯网站后端
 
+## 获取项目
+```
+git clone https://github.com/TuringCup/TuringBackend.git
+cd TuringBackend
+```
+
 ## 运行项目
+
+以下命令均在项目根目录运行
+
 ### 前提条件
 1. docker
 2. docker compose
+### 运行环境
+环境是指出来go项目外的依赖
+
+比如: mysql redis skywalking
+
+#### 开启环境
+```
+docker compose  up -d
+```
+#### 关闭环境
+```
+docker compose down
+```
 ### 运行
-#### windows
 ```
-git clone https://github.com/TuringCup/TuringBackend.git
-cd TuringBackend
-docker compose pull
-docker compose build
-docker compose up -d
-```
-#### Linux
-```
-git clone https://github.com/TuringCup/TuringBackend.git
-cd TuringBackend
-sudo docker-compose pull
-sudo docker-compose build
-sudo docker-compose up -d
+go run .
 ```
 
 等待一段时间后，项目成功运行，在浏览器访问http://localhost:5001/api/ping
 
 如果看到`success`则表示项目运行成功
-### 停止运行
-#### windows
-在项目根目录下
+
+### 测试
 ```
-docker compose down
+go test ./...
 ```
-#### Linux
-```
-sudo docker-compose down
-```
+
 ## 如何贡献
 1. 从main分支创建一个新的功能分支 例如: feature_xxx
 2. 在feature_xxx分支下进行开发，然后commit push

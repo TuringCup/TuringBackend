@@ -9,8 +9,9 @@ import (
 var Conf *Config
 
 type Config struct {
-	System *System `yaml:"system"`
-	DB     *DB     `yaml:"db"`
+	System     *System     `yaml:"system"`
+	DB         *DB         `yaml:"db"`
+	Skywalking *Skywalking `yaml:"skywalking"`
 }
 
 type System struct {
@@ -27,8 +28,16 @@ type DB struct {
 	Charset  string `yaml:"charset"`
 }
 
-func InitConfig() {
-	workdir, _ := os.Getwd()
+type Skywalking struct {
+	Host string `yaml:"host"`
+	Port string `yaml:"port"`
+}
+
+func InitConfig(path string) {
+	workdir := path
+	if path == "" {
+		workdir, _ = os.Getwd()
+	}
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(workdir)

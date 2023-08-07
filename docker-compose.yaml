@@ -8,9 +8,11 @@ services:
         image: mysql
         restart: always
         environment:
-            - MYSQL_ROOT_PASSWORD=TuringCupBackend123!@#
+            - MYSQL_RANDOM_ROOT_PASSWORD=yes
             - MYSQL_DATABASE=turingcup
             - TZ=Asia/Shanghai
+            - MYSQL_USER=turing
+            - MYSQL_PASSWORD=123456789
         # 通过config/sql下面的sql脚本初始化数据库
         volumes:
             - ./config/sql:/docker-entrypoint-initdb.d/
@@ -34,22 +36,22 @@ services:
             - db
         networks:
             - turing
-    turing:
-        container_name: TuringCupBackend
-        build: .
-        restart: always
-        links:
-            - redis
-            - db
-            - skywalking-oap
-        ports:
-            - "5001:5001"
-        depends_on:
-            - db
-            - redis
-            - skywalking-oap
-        networks:
-            - turing
+    # turing:
+    #     container_name: TuringCupBackend
+    #     build: .
+    #     restart: always
+    #     links:
+    #         - redis
+    #         - db
+    #         - skywalking-oap
+    #     ports:
+    #         - "5001:5001"
+    #     depends_on:
+    #         - db
+    #         - redis
+    #         - skywalking-oap
+    #     networks:
+    #         - turing
     # 监控系统
     elasticsearch:
         image: elasticsearch:8.4.2
@@ -69,8 +71,8 @@ services:
                 ] #⼼跳检测，成功之后不再执⾏后⾯的退出
             interval: 10s #⼼跳检测间隔周期
             timeout: 10s
-            retries: 3
-            start_period: 10s #⾸次检测延迟时间
+            retries: 2
+            start_period: 5s #⾸次检测延迟时间
         ulimits:
             memlock:
                 soft: -1
