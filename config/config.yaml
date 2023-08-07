@@ -7,7 +7,7 @@ db:
   dbName: turingcup
   charset: utf8mb4
   userName: turing
-  password: TuringCupBackend123@#$
+  password: 123456789
 skywalking:
   host: localhost
   port: 11800
