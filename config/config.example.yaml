@@ -4,7 +4,7 @@ system:
 db:
   host: db
   port: 3306
-  dbName: turing
+  dbName: turingcup
   charset: utf8mb4
   userName: root
   password: TuringCupBackend123!@#
