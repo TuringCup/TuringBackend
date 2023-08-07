@@ -5,7 +5,6 @@ ENV GO111MODULE=on \
 
 WORKDIR /app
 COPY . .
-# RUN skywalking-go-agent -inject .
 RUN go mod tidy
 # RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -toolexec="skywalking-go-agent" -a .
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" .

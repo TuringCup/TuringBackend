@@ -2,24 +2,24 @@ package main
 
 import (
 	"fmt"
-	"github.com/TuringCup/TuringBackend/repository/db"
 	"log"
 
 	"github.com/SkyAPM/go2sky"
 	v3 "github.com/SkyAPM/go2sky-plugins/gin/v3"
 	"github.com/SkyAPM/go2sky/reporter"
 	"github.com/TuringCup/TuringBackend/config"
+	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	config.InitConfig()
+	config.InitConfig("")
 	fmt.Println(config.Conf.System.Host)
 	fmt.Println(config.Conf.System.Port)
-	db.ConnectDB()
+	dao.ConnectDB()
 	r := gin.Default()
-	reporter, err := reporter.NewGRPCReporter("skywalking-oap:11800")
+	reporter, err := reporter.NewGRPCReporter(config.Conf.Skywalking.Host + ":" + config.Conf.Skywalking.Port)
 	if err != nil {
 		log.Fatalf("new reporter error %v \n", err)
 	}
@@ -30,5 +30,5 @@ func main() {
 	}
 	r.Use(v3.Middleware(r, tracer))
 	routes.NewRouter(r)
-	r.Run(":5001")
+	r.Run(config.Conf.System.Host + ":" + config.Conf.System.Port)
 }

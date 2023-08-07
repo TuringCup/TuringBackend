@@ -2,9 +2,12 @@ system:
   host: localhost
   port: 5001
 db:
-  host: db
+  host: localhost
   port: 3306
   dbName: turingcup
   charset: utf8mb4
-  userName: root
-  password: TuringCupBackend123!@#
+  userName: turing
+  password: TuringCupBackend123@#$
+skywalking:
+  host: localhost
+  port: 11800
