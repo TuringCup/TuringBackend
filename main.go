@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/TuringCup/TuringBackend/repository/db"
 	"log"
 
 	"github.com/SkyAPM/go2sky"
@@ -16,6 +17,7 @@ func main() {
 	config.InitConfig()
 	fmt.Println(config.Conf.System.Host)
 	fmt.Println(config.Conf.System.Port)
+	db.ConnectDB()
 	r := gin.Default()
 	reporter, err := reporter.NewGRPCReporter("skywalking-oap:11800")
 	if err != nil {
@@ -28,6 +30,5 @@ func main() {
 	}
 	r.Use(v3.Middleware(r, tracer))
 	routes.NewRouter(r)
-
 	r.Run(":5001")
 }
