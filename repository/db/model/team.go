@@ -1,20 +1,16 @@
 package model
 
 import (
-	"time"
-
 	"gorm.io/gorm"
+	"time"
 )
 
-type User struct {
+type Team struct {
 	gorm.Model
 	ID        int32 `gorm:"primaryKey;autoIncrement"`
+	Rid       int32
 	Name      string
-	Password  string
-	Phone     string
-	Email     string
-	School    string
-	SchoolID  string
+	CapId     int32
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
