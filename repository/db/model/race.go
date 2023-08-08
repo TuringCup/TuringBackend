@@ -11,4 +11,5 @@ type Race struct {
 	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"createdTime"`
 	UpdatedAt time.Time `json:"updatedTime"`
+	DeletedAt gorm.DeletedAt
 }

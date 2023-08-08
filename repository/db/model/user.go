@@ -17,4 +17,5 @@ type User struct {
 	SchoolID  string    `json:"schoolID"`
 	CreatedAt time.Time `json:"createdTime"`
 	UpdatedAt time.Time `json:"updatedTime"`
+	DeletedAt gorm.DeletedAt
 }

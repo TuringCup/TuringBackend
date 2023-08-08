@@ -13,4 +13,5 @@ type Team struct {
 	CapId     int32     `json:"capId"`
 	CreatedAt time.Time `json:"createdTime"`
 	UpdatedAt time.Time `json:"updatedTime"`
+	DeletedAt gorm.DeletedAt
 }
