@@ -58,15 +58,15 @@ type GetUserResponse struct {
 }
 
 type UpdateUserRequest struct {
-	Id          int64   `json:"id"`
-	Name        string  `json:"name"`
-	Password    string  `json:"password"`
-	Phone       *string `json:"phone"`
-	Email       string  `json:"email"`
-	School      string  `json:"school"`
-	SchoolId    string  `json:"schoolId"`
-	CreatedTime string  `json:"createdTime"`
-	UpdatedTime string  `json:"updatedTime"`
+	Id          int64  `json:"id"`
+	Name        string `json:"name"`
+	Password    string `json:"password"`
+	Phone       string `json:"phone"`
+	Email       string `json:"email"`
+	School      string `json:"school"`
+	SchoolId    string `json:"schoolId"`
+	CreatedTime string `json:"createdTime"`
+	UpdatedTime string `json:"updatedTime"`
 }
 
 type UpdateUserResponse struct {
