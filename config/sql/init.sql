@@ -19,8 +19,8 @@ create table turingcup.users
 create table turingcup.races (
 	id int auto_increment,
 	name varchar(32) not null,
-	createAt datetime,
-	updateAt datetime,
+	created_at datetime,
+	updated_at datetime,
 	primary key(id)
 );
 
@@ -29,16 +29,16 @@ create table turingcup.teams (
 	id int auto_increment,
 	rid int not null,
 	name varchar(32) not null,
-	capID int not null,
-	createAt datetime,
-	updateAt datetime,
+	cap_id int not null,
+    created_at datetime,
+    updated_at datetime,
 	primary key(id)
 );
 
 -- 创建数据表TeamRecord
 create table turingcup.team_records (
 	id int auto_increment,
-	raceID int not null,
+	race_id int not null,
 	uid int not null,
 	tid int not null,
 	primary key(id)
@@ -56,8 +56,8 @@ create table turingcup.rounds(
 	id int auto_increment,
 	tid1 int not null,
 	tid2 int not null,
-	tidWin int,
-	roundType int not null,
-	recordPath varchar(255),
+	tid_win int,
+	round_type int not null,
+	record_path varchar(255),
 	primary key(id)
 );
