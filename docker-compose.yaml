@@ -69,10 +69,10 @@ services:
                     "CMD-SHELL",
                     "curl -sf http://localhost:9200/_cluster/health || exit 1"
                 ] #⼼跳检测，成功之后不再执⾏后⾯的退出
-            interval: 10s #⼼跳检测间隔周期
+            interval: 60s #⼼跳检测间隔周期
             timeout: 10s
-            retries: 2
-            start_period: 5s #⾸次检测延迟时间
+            retries: 3
+            start_period: 60s #⾸次检测延迟时间
         ulimits:
             memlock:
                 soft: -1
@@ -102,10 +102,10 @@ services:
             SW_TELEMETRY: prometheus
         healthcheck:
             test: [ "CMD-SHELL", "/skywalking/bin/swctl ch" ]
-            interval: 5s
+            interval: 30s
             timeout: 10s
             retries: 3
-            start_period: 5s
+            start_period: 10s
         restart: on-failure
         ports:
             - "11800:11800"
