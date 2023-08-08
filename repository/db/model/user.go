@@ -17,4 +17,5 @@ type User struct {
 	SchoolID  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt
 }

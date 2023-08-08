@@ -1,8 +1,9 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Race struct {
@@ -11,4 +12,5 @@ type Race struct {
 	Name      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt
 }
