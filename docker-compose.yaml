@@ -69,9 +69,9 @@ services:
                     "CMD-SHELL",
                     "curl -sf http://localhost:9200/_cluster/health || exit 1"
                 ] #⼼跳检测，成功之后不再执⾏后⾯的退出
-            interval: 10s #⼼跳检测间隔周期
+            interval: 5s #⼼跳检测间隔周期
             timeout: 10s
-            retries: 2
+            retries: 3
             start_period: 5s #⾸次检测延迟时间
         ulimits:
             memlock:
