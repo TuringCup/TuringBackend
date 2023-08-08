@@ -41,7 +41,7 @@ type RefreshTokenResponse struct {
 }
 
 type GetUserRequest struct {
-	Id string `json:"id"`
+	ID string `json:"id"`
 }
 type GetUserResponse struct {
 	ID          int    `json:"id"`
@@ -58,7 +58,7 @@ type GetUserResponse struct {
 }
 
 type UpdateUserRequest struct {
-	Id          int64  `json:"id"`
+	ID          int64  `json:"id"`
 	Name        string `json:"name"`
 	Password    string `json:"password"`
 	Phone       string `json:"phone"`

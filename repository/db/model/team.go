@@ -7,7 +7,7 @@ import (
 
 type Team struct {
 	gorm.Model
-	Id        int32     `gorm:"primaryKey;autoIncrement" json:"id"`
+	ID        int32     `gorm:"primaryKey;autoIncrement" json:"id"`
 	Rid       int32     `json:"rid"`
 	Name      string    `json:"name"`
 	CapId     int32     `json:"capId"`
