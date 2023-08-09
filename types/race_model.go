@@ -1,9 +1,9 @@
 package types
 
 type GetAllRacesResponse struct {
-	ErrorCode *int64  `json:"errorCode"`
-	ErrorMsg  *string `json:"errorMsg"`
-	Races     []Race  `json:"races"`
+	ErrorCode int64  `json:"errorCode"`
+	ErrorMsg  string `json:"errorMsg"`
+	Races     []Race `json:"races"`
 }
 type GetRaceRequest struct {
 	ID int `json:"id"`
