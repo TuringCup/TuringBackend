@@ -15,14 +15,14 @@ type LoginResponse struct {
 
 // register
 type RegisterRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-	Province string `json:"province"`
-	City     string `json:"city"`
-	School   string `json:"school"`
-	SchoolId string `json:"schoolId"`
-	Phone    string `json:"phone"`
+	Username string `form:"username"`
+	Password string `form:"password"`
+	Email    string `form:"email"`
+	Province string `form:"province"`
+	City     string `form:"city"`
+	School   string `form:"school"`
+	SchoolId string `form:"schoolId"`
+	Phone    string `form:"phone"`
 }
 
 type RegisterResponse struct {

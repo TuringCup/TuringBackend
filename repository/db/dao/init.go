@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"time"
@@ -37,4 +38,9 @@ func ConnectDB() {
 
 	fmt.Println("connect to db successfully")
 	Db = database
+}
+
+func NewDBClient(ctx context.Context) *gorm.DB {
+	db := Db
+	return db.WithContext(ctx)
 }
