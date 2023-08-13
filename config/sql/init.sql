@@ -21,6 +21,7 @@ create table turingcup.races (
 	name varchar(32) not null,
 	created_at datetime,
 	updated_at datetime,
+    deleted_at   datetime,
 	primary key(id)
 );
 
@@ -32,6 +33,7 @@ create table turingcup.teams (
 	cap_id int not null,
     created_at datetime,
     updated_at datetime,
+    deleted_at   datetime,
 	primary key(id)
 );
 
