@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 
+	Api "github.com/TuringCup/TuringBackend/api"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,7 +17,7 @@ func NewRouter(r *gin.Engine) {
 		user := api.Group("/user")
 		{
 			user.GET("/login")
-			user.POST("/register")
+			user.POST("/register", Api.UserRegisterHandler())
 			user.PUT("/:id")
 			user.GET("/:id")
 			user.GET("/refreshtoken")
