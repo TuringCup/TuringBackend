@@ -16,8 +16,7 @@ import (
 )
 
 func main() {
-	// gin.SetMode(gin.ReleaseMode)
-	// log.Println(http.ListenAndServe(":6060", nil))
+	gin.SetMode(gin.ReleaseMode)
 	config.InitConfig("")
 	fmt.Println(config.Conf.System.Host)
 	fmt.Println(config.Conf.System.Port)
