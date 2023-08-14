@@ -7,10 +7,12 @@ import (
 	// "net/http"
 	// _ "net/http/pprof"
 
+	"github.com/DeanThompson/ginpprof"
 	"github.com/SkyAPM/go2sky"
 	v3 "github.com/SkyAPM/go2sky-plugins/gin/v3"
 	"github.com/SkyAPM/go2sky/reporter"
 	"github.com/TuringCup/TuringBackend/config"
+	"github.com/TuringCup/TuringBackend/repository/cache"
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/routes"
 	"github.com/gin-gonic/gin"
@@ -23,6 +25,7 @@ func main() {
 	fmt.Println(config.Conf.System.Host)
 	fmt.Println(config.Conf.System.Port)
 	dao.ConnectDB()
+	cache.InitCache()
 	r := gin.Default()
 	reporter, err := reporter.NewGRPCReporter(config.Conf.Skywalking.Host + ":" + config.Conf.Skywalking.Port)
 	if err != nil {
@@ -35,5 +38,6 @@ func main() {
 	}
 	r.Use(v3.Middleware(r, tracer))
 	routes.NewRouter(r)
+	ginpprof.Wrap(r)
 	r.Run(config.Conf.System.Host + ":" + config.Conf.System.Port)
 }

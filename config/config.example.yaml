@@ -14,4 +14,6 @@ skywalking:
 ses:
   id: AKIDHWkRAkG3WwLHC5vmbTQRI2Zt0wfDbppc
   key: gAcvmV1INFuLZcT7YovqY3MSL1VmqgNt
-
+redis:
+  host: localhost
+  port: 6379

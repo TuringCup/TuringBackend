@@ -24,15 +24,12 @@ func UserRegisterHandler() gin.HandlerFunc {
 				},
 			)
 		}
-		_, err := service.UserReigster(ctx.Request.Context(), &request)
+		response, err := service.UserReigster(ctx.Request.Context(), &request)
 		if err != nil {
 			log.Error(err)
 			ctx.JSON(
 				http.StatusOK,
-				types.RegisterResponse{
-					ErrorCode: errors.RegisterFailed,
-					ErrorMsg:  errors.GetMsg(errors.RegisterFailed) + err.Error(),
-				},
+				response,
 			)
 			return
 		}
@@ -51,6 +48,20 @@ func UserLoginHandler() gin.HandlerFunc {
 			resp := types.LoginResponse{
 				ErrorCode: errors.InvalidParams,
 				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+		}
+
+	}
+}
+
+func UserRegisterValidCodeHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.ValidCodeRequest
+		if err := ctx.Bind(req); err != nil {
+			resp := types.ValidCodeResponse{
+				ErrorCode: errors.ValidCodeError,
+				ErrorMsg:  errors.GetMsg(errors.ValidCodeError),
 			}
 			ctx.JSON(http.StatusOK, resp)
 		}

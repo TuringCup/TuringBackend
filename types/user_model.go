@@ -15,17 +15,28 @@ type LoginResponse struct {
 
 // register
 type RegisterRequest struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
-	Email    string `form:"email"`
-	Province string `form:"province"`
-	City     string `form:"city"`
-	School   string `form:"school"`
-	SchoolId string `form:"schoolId"`
-	Phone    string `form:"phone"`
+	Username  string `form:"username"`
+	Password  string `form:"password"`
+	Email     string `form:"email"`
+	Province  string `form:"province"`
+	City      string `form:"city"`
+	School    string `form:"school"`
+	SchoolId  string `form:"schoolId"`
+	Phone     string `form:"phone"`
+	ValidCode string `form:"validcode"`
 }
 
 type RegisterResponse struct {
+	ErrorMsg  string `json:"errorMsg"`
+	ErrorCode int    `json:"errorCode"`
+}
+
+type ValidCodeRequest struct {
+	Username string `form:"username"`
+	Email    string `form:"email"`
+}
+
+type ValidCodeResponse struct {
 	ErrorMsg  string `json:"errorMsg"`
 	ErrorCode int    `json:"errorCode"`
 }

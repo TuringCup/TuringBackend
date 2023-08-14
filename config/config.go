@@ -14,6 +14,7 @@ type Config struct {
 	DB         *DB         `yaml:"db"`
 	Skywalking *Skywalking `yaml:"skywalking"`
 	SES        *SES        `yaml:"ses"`
+	Redis      *Redis      `yaml:"redis"`
 }
 
 type System struct {
@@ -28,6 +29,12 @@ type DB struct {
 	UserName string `yaml:"userName"`
 	Password string `yaml:"password"`
 	Charset  string `yaml:"charset"`
+}
+
+type Redis struct {
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	Password string `yaml:"password"`
 }
 
 type Skywalking struct {
