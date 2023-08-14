@@ -13,18 +13,32 @@ func TestGenerateAndParseToken(t *testing.T) {
 		return
 	}
 	accessTokenClaims, err := ParseToken(accessToken)
-	if id != accessTokenClaims.ID {
-		t.Errorf("expect %d,but get %d", id, accessTokenClaims.ID)
-	}
-	if username != accessTokenClaims.Username {
-		t.Errorf("expect %s,but get %s", username, accessTokenClaims.Username)
-	}
-	if ip != accessTokenClaims.IP {
-		t.Errorf("expect %s,but get %s", ip, accessTokenClaims.IP)
+	if accessTokenClaims != nil {
+		if id != accessTokenClaims.ID {
+			t.Errorf("expect %d,but get %d", id, accessTokenClaims.ID)
+		}
+		if username != accessTokenClaims.Username {
+			t.Errorf("expect %s,but get %s", username, accessTokenClaims.Username)
+		}
+		if ip != accessTokenClaims.IP {
+			t.Errorf("expect %s,but get %s", ip, accessTokenClaims.IP)
+		}
+	} else {
+		t.Errorf("parse failed")
 	}
 	jwtSecretKey = []byte("njustwrong")
 	accessTokenClaims, err = ParseToken(accessToken)
-	if accessTokenClaims == nil {
+	if accessTokenClaims != nil {
+		if id != accessTokenClaims.ID {
+			t.Errorf("expect %d,but get %d", id, accessTokenClaims.ID)
+		}
+		if username != accessTokenClaims.Username {
+			t.Errorf("expect %s,but get %s", username, accessTokenClaims.Username)
+		}
+		if ip != accessTokenClaims.IP {
+			t.Errorf("expect %s,but get %s", ip, accessTokenClaims.IP)
+		}
+	} else {
 		t.Errorf("parse failed")
 	}
 }
