@@ -43,7 +43,7 @@ func GenerateToken(id int, username string, ip string) (accessToken, refreshToke
 	return accessToken, refreshToken, err
 }
 
-// 解析token
+// 解析token,解析失败返回nil
 func ParseToken(token string) (*Claims, error) {
 	tokenClaims, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (any, error) {
 		return jwtSecretKey, nil
@@ -61,9 +61,15 @@ func VerifyToken(accessToken, refreshToken string) (newAccessToken, newRefreshTo
 	if err != nil {
 		return "", "", err
 	}
+	if accessTokenClaims == nil {
+		return
+	}
 	refreshTokenClaims, err := ParseToken(refreshToken)
 	if err != nil {
 		return "", "", err
+	}
+	if refreshTokenClaims == nil {
+		return
 	}
 
 	if accessTokenClaims.ExpiresAt > time.Now().Unix() {

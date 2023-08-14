@@ -1,7 +1,6 @@
 package jwt
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -23,5 +22,9 @@ func TestGenerateAndParseToken(t *testing.T) {
 	if ip != accessTokenClaims.IP {
 		t.Errorf("expect %s,but get %s", ip, accessTokenClaims.IP)
 	}
-	fmt.Println(accessToken)
+	jwtSecretKey = []byte("njustwrong")
+	accessTokenClaims, err = ParseToken(accessToken)
+	if accessTokenClaims == nil {
+		t.Errorf("parse failed")
+	}
 }
