@@ -24,7 +24,7 @@ func CheckValidCode(code string) (err error) {
 	c := pool.Get()
 	defer c.Close()
 	key := "validcode_" + code
-	exist, err := redis.Bool(c.Do("EXIST", key))
+	exist, err := redis.Bool(c.Do("EXISTS", key))
 	if exist {
 		c.Do("DEL", key)
 		return nil
