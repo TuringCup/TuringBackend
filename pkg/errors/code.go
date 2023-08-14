@@ -7,5 +7,8 @@ const (
 	InvalidParams         = 400
 
 	// UserErrorCode
-	RegisterFailed = 10001
+	RegisterFailed     = 10001
+	UserNotExist       = 10002
+	UserPasswordWrong  = 10003
+	SendValidCodeError = 10004
 )

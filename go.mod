@@ -3,8 +3,12 @@ module github.com/TuringCup/TuringBackend
 go 1.20
 
 require (
-	github.com/SkyAPM/go2sky v1.5.0 // indirect
 	github.com/SkyAPM/go2sky-plugins/gin/v3 v3.0.0-20230614023504-1db7dc6350fd
+	github.com/go-kratos/kratos/v2 v2.7.0
+)
+
+require (
+	github.com/SkyAPM/go2sky v1.5.0 // indirect
 	github.com/bytedance/sonic v1.10.0-rc3 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
@@ -12,7 +16,6 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.9.1 // indirect
-	github.com/go-kratos/kratos/v2 v2.7.0
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.1 // indirect
@@ -39,6 +42,8 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/spf13/viper v1.16.0 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.722
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/ses v1.0.722 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/arch v0.4.0 // indirect

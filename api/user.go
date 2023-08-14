@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/TuringCup/TuringBackend/pkg/errors"
@@ -39,5 +40,20 @@ func UserRegisterHandler() gin.HandlerFunc {
 			ErrorCode: errors.SUCCESS,
 			ErrorMsg:  errors.GetMsg(errors.SUCCESS),
 		})
+	}
+}
+
+func UserLoginHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.LoginRequest
+		if err := ctx.Bind(&req); err != nil {
+			fmt.Println(err)
+			resp := types.LoginResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+		}
+
 	}
 }

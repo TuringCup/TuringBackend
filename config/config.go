@@ -12,6 +12,7 @@ type Config struct {
 	System     *System     `yaml:"system"`
 	DB         *DB         `yaml:"db"`
 	Skywalking *Skywalking `yaml:"skywalking"`
+	SES        *SES        `yaml:"ses"`
 }
 
 type System struct {
@@ -31,6 +32,11 @@ type DB struct {
 type Skywalking struct {
 	Host string `yaml:"host"`
 	Port string `yaml:"port"`
+}
+
+type SES struct {
+	SecretID  string `yaml:"id"`
+	SecretKey string `yaml:"key"`
 }
 
 func InitConfig(path string) {
