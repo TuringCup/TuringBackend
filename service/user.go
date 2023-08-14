@@ -53,12 +53,11 @@ func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUs
 	userdao := dao.NewUserDao(ctx)
 	id, err := strconv.Atoi(req.ID)
 	if err != nil {
-		log.Error(err)
-		return
+		return resp, err
 	}
 	user, err := userdao.FindUserById(id)
 	if err != nil {
-		log.Error(err)
+		return resp, err
 	}
 	resp = &types.GetUserResponse{
 		ID:          int(user.ID),

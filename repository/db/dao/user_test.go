@@ -27,6 +27,9 @@ func TestFindUser(t *testing.T) {
 	config.InitConfig("../../..")
 	ConnectDB()
 	userdao := TestNewUserDao()
-	user, _ := userdao.FindUserById(1)
+	user, err := userdao.FindUserById(1)
+	if err != nil {
+		err.Error()
+	}
 	fmt.Println(*user)
 }
