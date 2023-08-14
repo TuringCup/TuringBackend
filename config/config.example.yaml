@@ -12,6 +12,6 @@ skywalking:
   host: localhost
   port: 11800
 ses:
-  sid: AKIDHWkRAkG3WwLHC5vmbTQRI2Zt0wfDbppc
-  skey: gAcvmV1INFuLZcT7YovqY3MSL1VmqgN
+  id: AKIDHWkRAkG3WwLHC5vmbTQRI2Zt0wfDbppc
+  key: gAcvmV1INFuLZcT7YovqY3MSL1VmqgNt
 

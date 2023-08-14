@@ -36,8 +36,8 @@ type Skywalking struct {
 }
 
 type SES struct {
-	SecretID  string `yaml:"sid"`
-	SecretKey string `yaml:"skey"`
+	Id  string `yaml:"id"`
+	Key string `yaml:"key"`
 }
 
 func InitConfig(path string) {

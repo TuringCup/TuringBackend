@@ -13,8 +13,8 @@ import (
 
 func SendValidCode(email string, code string) (err error) {
 	credential := common.NewCredential(
-		config.Conf.SES.SecretID,
-		config.Conf.SES.SecretKey,
+		config.Conf.SES.Id,
+		config.Conf.SES.Key,
 	)
 	// 实例化一个client选项，可选的，没有特殊需求可以跳过
 	cpf := profile.NewClientProfile()
