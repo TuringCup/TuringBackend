@@ -8,3 +8,10 @@ db:
   charset: utf8mb4
   userName: turing
   password: 123456789
+skywalking:
+  host: localhost
+  port: 11800
+ses:
+  sid: AKIDHWkRAkG3WwLHC5vmbTQRI2Zt0wfDbppc
+  skey: gAcvmV1INFuLZcT7YovqY3MSL1VmqgN
+

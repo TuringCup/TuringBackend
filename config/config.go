@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 )
 
@@ -35,8 +36,8 @@ type Skywalking struct {
 }
 
 type SES struct {
-	SecretID  string `yaml:"id"`
-	SecretKey string `yaml:"key"`
+	SecretID  string `yaml:"sid"`
+	SecretKey string `yaml:"skey"`
 }
 
 func InitConfig(path string) {
@@ -44,8 +45,15 @@ func InitConfig(path string) {
 	if path == "" {
 		workdir, _ = os.Getwd()
 	}
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
+	if gin.Mode() == gin.DebugMode {
+		viper.SetConfigName("config.example")
+		viper.SetConfigType("yaml")
+	}
+	if gin.Mode() == gin.ReleaseMode {
+		viper.SetConfigName("config")
+		viper.SetConfigType("yaml")
+	}
+
 	viper.AddConfigPath(workdir)
 	viper.AddConfigPath(workdir + "/config")
 	err := viper.ReadInConfig()
