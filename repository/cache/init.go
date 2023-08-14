@@ -12,6 +12,7 @@ var pool *redigo.Pool
 func InitCache() {
 	address := config.Conf.Redis.Host + ":" + config.Conf.Redis.Port
 	pwd := config.Conf.Redis.Password
+	// fmt.Println(pwd)
 	pool = &redigo.Pool{
 		MaxIdle:     5,
 		IdleTimeout: 360 * time.Second,

@@ -18,14 +18,17 @@ import (
 func UserReigsterSendValidCode(ctx context.Context, req *types.ValidCodeRequest) (resp interface{}, err error) {
 	code, err := cache.GenerateValidCode()
 	if err != nil {
+		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.ValidCodeResponse{
 			ErrorCode: errs.ValidCodeGenError,
 			ErrorMsg:  errs.GetMsg(errs.ValidCodeGenError),
 		}
 		return
 	}
-	err = email.SendValidCode(code, req.Email)
+	fmt.Fprintln(gin.DefaultWriter, req.Email)
+	err = email.SendValidCode(req.Email, code)
 	if err != nil {
+		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.ValidCodeResponse{
 			ErrorCode: errs.SendValidCodeError,
 			ErrorMsg:  errs.GetMsg(errs.SendValidCodeError),

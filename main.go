@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	// "net/http"
-	// _ "net/http/pprof"
-
 	"github.com/DeanThompson/ginpprof"
 	"github.com/SkyAPM/go2sky"
 	v3 "github.com/SkyAPM/go2sky-plugins/gin/v3"
@@ -19,7 +16,7 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 	// log.Println(http.ListenAndServe(":6060", nil))
 	config.InitConfig("")
 	fmt.Println(config.Conf.System.Host)

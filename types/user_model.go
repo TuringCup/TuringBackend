@@ -32,8 +32,7 @@ type RegisterResponse struct {
 }
 
 type ValidCodeRequest struct {
-	Username string `form:"username"`
-	Email    string `form:"email"`
+	Email string `form:"email"`
 }
 
 type ValidCodeResponse struct {
