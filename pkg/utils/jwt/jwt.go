@@ -1,6 +1,7 @@
 package jwt
 
 import (
+	"errors"
 	"github.com/TuringCup/TuringBackend/consts"
 	"github.com/dgrijalva/jwt-go"
 	"time"
@@ -40,7 +41,7 @@ func GenerateToken(id int, username string, ip string) (accessToken, refreshToke
 	if err != nil {
 		return "", "", err
 	}
-	return accessToken, refreshToken, err
+	return accessToken, refreshToken, nil
 }
 
 // 解析token,解析失败返回nil
@@ -59,23 +60,16 @@ func ParseToken(token string) (*Claims, error) {
 func VerifyToken(accessToken, refreshToken string) (newAccessToken, newRefreshToken string, err error) {
 	accessTokenClaims, err := ParseToken(accessToken)
 	if err != nil {
-		return "", "", err
-	}
-	if accessTokenClaims == nil {
-		return
+		return "", "", errors.New("invalid token")
 	}
 	refreshTokenClaims, err := ParseToken(refreshToken)
 	if err != nil {
-		return "", "", err
+		return "", "", errors.New("invalid token")
 	}
-	if refreshTokenClaims == nil {
-		return
+	if time.Now().Unix() < accessTokenClaims.ExpiresAt {
+		return accessToken, refreshToken, nil
 	}
-
-	if accessTokenClaims.ExpiresAt > time.Now().Unix() {
-		return GenerateToken(accessTokenClaims.ID, accessTokenClaims.Username, accessTokenClaims.IP)
-	}
-	if refreshTokenClaims.ExpiresAt > time.Now().Unix() {
+	if time.Now().Unix() >= accessTokenClaims.ExpiresAt && time.Now().Unix() <= refreshTokenClaims.ExpiresAt {
 		return GenerateToken(accessTokenClaims.ID, accessTokenClaims.Username, accessTokenClaims.IP)
 	}
 	return "", "", err
