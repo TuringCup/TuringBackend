@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/TuringCup/TuringBackend/config"
@@ -20,4 +21,15 @@ func TestCreateAndDelUser(t *testing.T) {
 	if res.Error != nil {
 		t.Error(res.Error)
 	}
+}
+
+func TestFindUser(t *testing.T) {
+	config.InitConfig("../../..")
+	ConnectDB()
+	userdao := TestNewUserDao()
+	user, err := userdao.FindUserById(1)
+	if err != nil {
+		err.Error()
+	}
+	fmt.Println(*user)
 }

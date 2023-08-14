@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"strconv"
 
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/repository/db/model"
@@ -45,4 +46,29 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 		return
 	}
 	return
+}
+
+func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUserResponse, err error) {
+
+	userdao := dao.NewUserDao(ctx)
+	id, err := strconv.Atoi(req.ID)
+	if err != nil {
+		return resp, err
+	}
+	user, err := userdao.FindUserById(id)
+	if err != nil {
+		return resp, err
+	}
+	resp = &types.GetUserResponse{
+		ID:          int(user.ID),
+		Name:        user.Name,
+		Password:    user.Password,
+		Phone:       user.Phone,
+		Email:       user.Email,
+		School:      user.School,
+		SchoolId:    user.SchoolID,
+		CreatedTime: user.CreatedAt.String(),
+		UpdatedTime: user.UpdatedAt.String(),
+	}
+	return resp, err
 }

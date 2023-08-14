@@ -14,7 +14,9 @@ type UserDao struct {
 func NewUserDao(ctx context.Context) *UserDao {
 	return &UserDao{NewDBClient(ctx)}
 }
-
+func TestNewUserDao() *UserDao {
+	return &UserDao{TestDBClient()}
+}
 func (dao *UserDao) CreateUser(user *model.User) error {
 	return dao.DB.Create(&user).Error
 }
@@ -30,4 +32,12 @@ func (dao *UserDao) ExistOrNotByUserName(name string) (user *model.User, exist b
 		return user, false, err
 	}
 	return user, true, nil
+}
+
+func (dao *UserDao) FindUserById(id int) (user *model.User, err error) {
+	err = dao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
+	if err != nil {
+		return user, err
+	}
+	return user, nil
 }
