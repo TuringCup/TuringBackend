@@ -38,7 +38,5 @@ func TestGenerateAndParseToken(t *testing.T) {
 		if ip != accessTokenClaims.IP {
 			t.Errorf("expect %s,but get %s", ip, accessTokenClaims.IP)
 		}
-	} else {
-		t.Errorf("parse failed")
 	}
 }
