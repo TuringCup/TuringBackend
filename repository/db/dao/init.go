@@ -46,3 +46,8 @@ func NewDBClient(ctx context.Context) *gorm.DB {
 	db := Db
 	return db.WithContext(ctx)
 }
+
+func TestDBClient() *gorm.DB {
+	db := Db
+	return db
+}
