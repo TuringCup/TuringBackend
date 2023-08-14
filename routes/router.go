@@ -20,7 +20,7 @@ func NewRouter(r *gin.Engine) {
 			user.POST("/register", Api.UserRegisterHandler())
 			user.POST("/register/validcode", Api.UserRegisterValidCodeHandler())
 			user.PUT("/:id")
-			user.GET("/:id")
+			user.GET("/:id", Api.UserFindHandler())
 			user.GET("/refreshtoken")
 		}
 

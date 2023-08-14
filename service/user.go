@@ -3,7 +3,11 @@ package service
 import (
 	"context"
 	"errors"
+
 	"fmt"
+
+	"strconv"
+
 
 	"github.com/TuringCup/TuringBackend/pkg/email"
 	errs "github.com/TuringCup/TuringBackend/pkg/errors"
@@ -161,4 +165,29 @@ func UserLogin(ctx context.Context, req *types.LoginRequest) (resp interface{}, 
 		return
 	}
 	return
+}
+
+func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUserResponse, err error) {
+
+	userdao := dao.NewUserDao(ctx)
+	id, err := strconv.Atoi(req.ID)
+	if err != nil {
+		return resp, err
+	}
+	user, err := userdao.FindUserById(id)
+	if err != nil {
+		return resp, err
+	}
+	resp = &types.GetUserResponse{
+		ID:          int(user.ID),
+		Name:        user.Name,
+		Password:    user.Password,
+		Phone:       user.Phone,
+		Email:       user.Email,
+		School:      user.School,
+		SchoolId:    user.SchoolID,
+		CreatedTime: user.CreatedAt.String(),
+		UpdatedTime: user.UpdatedAt.String(),
+	}
+	return resp, err
 }
