@@ -8,9 +8,9 @@ import (
 
 	"strconv"
 
-
 	"github.com/TuringCup/TuringBackend/pkg/email"
 	errs "github.com/TuringCup/TuringBackend/pkg/errors"
+	"github.com/TuringCup/TuringBackend/pkg/utils/jwt"
 	"github.com/TuringCup/TuringBackend/repository/cache"
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/repository/db/model"
@@ -135,7 +135,8 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	return
 }
 
-func UserLogin(ctx context.Context, req *types.LoginRequest) (resp interface{}, err error) {
+func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err error) {
+
 	userdao := dao.NewUserDao(ctx)
 	user, exist, err := userdao.ExistOrNotByUserName(req.Username)
 	if err != nil {
@@ -163,6 +164,21 @@ func UserLogin(ctx context.Context, req *types.LoginRequest) (resp interface{}, 
 			ErrorMsg:  errs.GetMsg(errs.UserPasswordWrong),
 		}
 		return
+	}
+	access_token, refresh_token, err := jwt.GenerateToken(int(user.ID), user.Name, ctx.ClientIP())
+	if err != nil {
+		fmt.Fprintln(gin.DefaultWriter, req.Username+" password wrong"+err.Error())
+		resp = types.LoginResponse{
+			ErrorCode: errs.GenerateTokenError,
+			ErrorMsg:  errs.GetMsg(errs.GenerateTokenError),
+		}
+		return
+	}
+	resp = types.LoginResponse{
+		Token:        access_token,
+		RefreshToken: refresh_token,
+		ErrorCode:    errs.SUCCESS,
+		ErrorMsg:     errs.GetMsg(errs.SUCCESS),
 	}
 	return
 }

@@ -18,4 +18,7 @@ const (
 	// ValidCodeError
 	ValidCodeError    = 20001
 	ValidCodeGenError = 20002
+
+	// Token
+	GenerateTokenError = 30001
 )
