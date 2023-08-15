@@ -16,7 +16,7 @@ func NewRouter(r *gin.Engine) {
 
 		user := api.Group("/user")
 		{
-			user.GET("/login")
+			user.GET("/login", Api.UserLoginHandler())
 			user.POST("/register", Api.UserRegisterHandler())
 			user.POST("/register/validcode", Api.UserRegisterValidCodeHandler())
 			user.PUT("/:id")
@@ -36,7 +36,6 @@ func NewRouter(r *gin.Engine) {
 
 				teams.GET("/")
 				teams.POST("/")
-
 				{
 					team.GET("/")
 					team.POST("/join")
