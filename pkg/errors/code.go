@@ -7,5 +7,15 @@ const (
 	InvalidParams         = 400
 
 	// UserErrorCode
-	RegisterFailed = 10001
+	RegisterFailed     = 10001
+	UserNotExist       = 10002
+	UserPasswordWrong  = 10003
+	SendValidCodeError = 10004
+	UserNameUsed       = 10005
+	EmailUsed          = 10006
+	LoginFailed        = 10007
+
+	// ValidCodeError
+	ValidCodeError    = 20001
+	ValidCodeGenError = 20002
 )

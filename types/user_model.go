@@ -2,30 +2,40 @@ package types
 
 // login
 type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Username string `form:"username"`
+	Password string `form:"password"`
 }
 
 type LoginResponse struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
 	ErrorMsg     string `json:"errorMsg"`
-	ErrorCode    string `json:"errorCode"`
+	ErrorCode    int    `json:"errorCode"`
 }
 
 // register
 type RegisterRequest struct {
-	Username string `form:"username"`
-	Password string `form:"password"`
-	Email    string `form:"email"`
-	Province string `form:"province"`
-	City     string `form:"city"`
-	School   string `form:"school"`
-	SchoolId string `form:"schoolId"`
-	Phone    string `form:"phone"`
+	Username  string `form:"username"`
+	Password  string `form:"password"`
+	Email     string `form:"email"`
+	Province  string `form:"province"`
+	City      string `form:"city"`
+	School    string `form:"school"`
+	SchoolId  string `form:"schoolId"`
+	Phone     string `form:"phone"`
+	ValidCode string `form:"validcode"`
 }
 
 type RegisterResponse struct {
+	ErrorMsg  string `json:"errorMsg"`
+	ErrorCode int    `json:"errorCode"`
+}
+
+type ValidCodeRequest struct {
+	Email string `form:"email"`
+}
+
+type ValidCodeResponse struct {
 	ErrorMsg  string `json:"errorMsg"`
 	ErrorCode int    `json:"errorCode"`
 }

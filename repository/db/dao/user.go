@@ -34,10 +34,25 @@ func (dao *UserDao) ExistOrNotByUserName(name string) (user *model.User, exist b
 	return user, true, nil
 }
 
+
+func (dao *UserDao) ExistOrNotByEmail(email string) (user *model.User, exist bool, err error) {
+	var count int64
+	err = dao.DB.Model(&model.User{}).Where("email = ?", email).Count(&count).Error
+	if count == 0 {
+		return nil, false, err
+	}
+	err = dao.DB.Model(&model.User{}).Where("email = ?", email).First(&user).Error
+	if err != nil {
+		return user, false, err
+	}
+	return user, true, nil
+}
+
 func (dao *UserDao) FindUserById(id int) (user *model.User, err error) {
 	err = dao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
 	if err != nil {
 		return user, err
 	}
 	return user, nil
+
 }
