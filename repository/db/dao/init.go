@@ -16,7 +16,7 @@ var Db *gorm.DB
 
 func ConnectDB() {
 	DBconfig := config.Conf.DB
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&", DBconfig.UserName, DBconfig.Password, DBconfig.Host, DBconfig.Port, DBconfig.DbName, DBconfig.Charset)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=Local", DBconfig.UserName, DBconfig.Password, DBconfig.Host, DBconfig.Port, DBconfig.DbName, DBconfig.Charset)
 	database, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
 	})
