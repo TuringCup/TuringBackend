@@ -2,9 +2,10 @@ package jwt
 
 import (
 	"errors"
+	"time"
+
 	"github.com/TuringCup/TuringBackend/consts"
 	"github.com/dgrijalva/jwt-go"
-	"time"
 )
 
 type Claims struct {
