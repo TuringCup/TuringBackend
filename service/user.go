@@ -180,6 +180,7 @@ func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err
 		ErrorCode:    errs.SUCCESS,
 		ErrorMsg:     errs.GetMsg(errs.SUCCESS),
 	}
+
 	return
 }
 

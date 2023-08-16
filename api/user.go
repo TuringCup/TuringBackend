@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/TuringCup/TuringBackend/pkg/errors"
+	"github.com/TuringCup/TuringBackend/pkg/utils/jwt"
 	"github.com/TuringCup/TuringBackend/service"
 	"github.com/TuringCup/TuringBackend/types"
 	"github.com/gin-gonic/gin"
@@ -77,6 +78,22 @@ func UserFindHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request types.GetUserRequest
 		request.ID = ctx.Param("id")
+		token := ctx.Query("token")
+		claim, err := jwt.ParseToken(token)
+		if err != nil {
+			ctx.JSON(http.StatusOK, types.GetUserResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			})
+			return
+		}
+		if id, err := strconv.Atoi(request.ID); claim.ID != id || err != nil {
+			ctx.JSON(http.StatusOK, types.GetUserResponse{
+				ErrorCode: errors.Forbidden,
+				ErrorMsg:  errors.GetMsg(errors.Forbidden),
+			})
+			return
+		}
 		user, err := service.FindUser(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
@@ -95,6 +112,22 @@ func UserUpdateHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.UpdateUserRequest
 		urlId := ctx.Param("id")
+		token := ctx.Query("token")
+		claim, err := jwt.ParseToken(token)
+		if err != nil {
+			ctx.JSON(http.StatusOK, types.GetUserResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			})
+			return
+		}
+		if id, err := strconv.Atoi(urlId); claim.ID != id || err != nil {
+			ctx.JSON(http.StatusOK, types.GetUserResponse{
+				ErrorCode: errors.Forbidden,
+				ErrorMsg:  errors.GetMsg(errors.Forbidden),
+			})
+			return
+		}
 		if err := ctx.Bind(&req); err != nil {
 			resp := types.UpdateUserResponse{
 				ErrorCode: errors.InvalidParams,

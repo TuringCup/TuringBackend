@@ -120,7 +120,7 @@ services:
         links:
             - skywalking-oap
         ports:
-            - "8080:8080"
+            - "8081:8080"
         environment:
             SW_OAP_ADDRESS: http://skywalking-oap:12800
             SW_HEALTH_CHECKER: default

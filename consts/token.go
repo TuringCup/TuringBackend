@@ -3,6 +3,6 @@ package consts
 import "time"
 
 const (
-	AccessTokenExpireDuration  = 2 * time.Hour
-	RefreshTokenExpireDuration = 10 * 24 * time.Hour
+	AccessTokenExpireDuration  = 5 * time.Minute
+	RefreshTokenExpireDuration = 2 * time.Hour
 )

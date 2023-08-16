@@ -5,6 +5,7 @@ const (
 	UpdatePasswordSuccess = 201
 	ERROR                 = 500
 	InvalidParams         = 400
+	Forbidden             = 403
 
 	// UserErrorCode
 	RegisterFailed     = 10001
@@ -21,4 +22,5 @@ const (
 
 	// Token
 	GenerateTokenError = 30001
+	TokenTimeout       = 30002
 )
