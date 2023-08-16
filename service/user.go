@@ -166,7 +166,7 @@ func UserLogin(ctx context.Context, req *types.LoginRequest) (resp interface{}, 
 	return
 }
 
-func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUserResponse, err error) {
+func UserFind(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUserResponse, err error) {
 
 	userdao := dao.NewUserDao(ctx)
 	id, err := strconv.Atoi(req.ID)

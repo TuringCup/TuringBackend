@@ -13,6 +13,9 @@ type RaceDao struct {
 func NewRaceDao(ctx context.Context) *RaceDao {
 	return &RaceDao{NewDBClient(ctx)}
 }
+func TestNewRaceDao() *RaceDao {
+	return &RaceDao{TestDBClient()}
+}
 
 func (dao *RaceDao) CreateRace(race *model.Race) error {
 	return dao.DB.Create(&race).Error
@@ -29,4 +32,12 @@ func (dao *RaceDao) ExistOrNotByRaceName(name string) (race *model.Race, exist b
 		return race, true, err
 	}
 	return race, true, nil
+}
+
+func (dao *RaceDao) FindRaceById(id int) (race *model.Race, err error) {
+	err = dao.DB.Model(&model.Race{}).Where("id=?", id).First(&race).Error
+	if err != nil {
+		return nil, err
+	}
+	return race, nil
 }

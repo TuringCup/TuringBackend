@@ -18,4 +18,8 @@ const (
 	// ValidCodeError
 	ValidCodeError    = 20001
 	ValidCodeGenError = 20002
+
+	//RaceErrorCode
+	RaceNotExist = 30002
+	RaceNameUsed = 30005
 )
