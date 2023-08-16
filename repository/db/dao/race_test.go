@@ -21,3 +21,20 @@ func TestCreateAndDelRace(t *testing.T) {
 		t.Error(res.Error)
 	}
 }
+
+//func TestFindRace(t *testing.T) {
+//	config.InitConfig("../../..")
+//	ConnectDB()
+//	race := model.Race{
+//		Name: "test",
+//	}
+//	racedao := TestNewRaceDao()
+//	racedao.CreateRace(&race)
+//	raceFind, err := racedao.FindRaceById(1)
+//	if err != nil {
+//		t.Error(err.Error())
+//		return
+//	}
+//	fmt.Println(raceFind)
+//	//Db.Delete(&race)
+//}

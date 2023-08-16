@@ -62,10 +62,13 @@ func NewRouter(r *gin.Engine) {
 				}
 
 			}
-			race.GET("/")
-			race.GET("/:rid")
+			race.GET("/", Api.RaceHandler())
+			race.GET("/:rid", Api.RaceFindHandler())
 			race.GET("/:rid/progress")
 		}
-
+		admin := api.Group("/admin")
+		{
+			admin.POST("/addrace", Api.RaceAddHandler())
+		}
 	}
 }

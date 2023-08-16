@@ -78,6 +78,7 @@ func UserFindHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request types.GetUserRequest
 		request.ID = ctx.Param("id")
+
 		token := ctx.Query("token")
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
@@ -94,7 +95,7 @@ func UserFindHandler() gin.HandlerFunc {
 			})
 			return
 		}
-		user, err := service.FindUser(ctx.Request.Context(), &request)
+    user, err := service.UserFind(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
 				ErrorCode: errors.InvalidParams,
