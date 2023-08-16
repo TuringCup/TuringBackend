@@ -203,8 +203,8 @@ func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.
 	_, err = userdao.UpdateUser(req.ID, user)
 	if err != nil {
 		resp := &types.UpdateUserResponse{
-			ErrorCode: errs.ERROR,
-			ErrorMsg:  errs.GetMsg(errs.ERROR),
+			ErrorCode: errs.UserNotExist,
+			ErrorMsg:  errs.GetMsg(errs.UserNotExist),
 		}
 		return resp, err
 	}
