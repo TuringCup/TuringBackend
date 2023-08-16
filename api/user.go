@@ -89,3 +89,19 @@ func UserFindHandler() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, user)
 	}
 }
+
+func UserUpdateHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.UpdateUserRequest
+		if err := ctx.Bind(&req); err != nil {
+			resp := types.UpdateUserResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+			return
+		}
+		resp, _ := service.UpdateUser(ctx, &req)
+		ctx.JSON(http.StatusOK, *resp)
+	}
+}

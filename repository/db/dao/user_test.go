@@ -33,3 +33,24 @@ func TestFindUser(t *testing.T) {
 	}
 	fmt.Println(*user)
 }
+
+func TestUpdateUser(t *testing.T) {
+	config.InitConfig("../../..")
+	ConnectDB()
+	userDao := TestNewUserDao()
+	user := model.User{
+		Name:     "testName",
+		Password: "testPassword",
+		Phone:    "testPhone",
+		Email:    "test@test",
+		School:   "testSchool",
+		SchoolID: "testSchoolId",
+	}
+	success, err := userDao.UpdateUser(1, &user)
+	if err != nil {
+		err.Error()
+	}
+	if !success {
+		t.Error("update failed")
+	}
+}

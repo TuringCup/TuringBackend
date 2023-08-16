@@ -68,7 +68,7 @@ type GetUserResponse struct {
 }
 
 type UpdateUserRequest struct {
-	ID          int64  `json:"id"`
+	ID          int    `json:"id"`
 	Name        string `json:"name"`
 	Password    string `json:"password"`
 	Phone       string `json:"phone"`
@@ -81,5 +81,5 @@ type UpdateUserRequest struct {
 
 type UpdateUserResponse struct {
 	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	ErrorCode int    `json:"errorCode"`
 }
