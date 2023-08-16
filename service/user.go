@@ -207,3 +207,36 @@ func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUs
 	}
 	return resp, err
 }
+func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.UpdateUserResponse, err error) {
+	userdao := dao.NewUserDao(ctx)
+	encrypt_password, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Fprintln(gin.DefaultErrorWriter, err)
+		resp = &types.UpdateUserResponse{
+			ErrorCode: errs.RegisterFailed,
+			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+		}
+		return
+	}
+	user := &model.User{
+		Name:     req.Name,
+		Password: string(encrypt_password),
+		Phone:    req.Phone,
+		School:   req.School,
+		SchoolID: req.SchoolId,
+		Email:    req.Email,
+	}
+	_, err = userdao.UpdateUser(req.ID, user)
+	if err != nil {
+		resp := &types.UpdateUserResponse{
+			ErrorCode: errs.UserNotExist,
+			ErrorMsg:  errs.GetMsg(errs.UserNotExist),
+		}
+		return resp, err
+	}
+	resp = &types.UpdateUserResponse{
+		ErrorCode: errs.SUCCESS,
+		ErrorMsg:  errs.GetMsg(errs.SUCCESS),
+	}
+	return resp, nil
+}

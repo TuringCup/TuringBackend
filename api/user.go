@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/TuringCup/TuringBackend/pkg/errors"
 	"github.com/TuringCup/TuringBackend/service"
@@ -79,13 +80,40 @@ func UserFindHandler() gin.HandlerFunc {
 		user, err := service.FindUser(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.ERROR,
-				ErrorMsg:  err.Error(),
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
 			})
 			return
 		}
 		user.ErrorCode = errors.SUCCESS
 		user.ErrorMsg = errors.GetMsg(errors.SUCCESS)
 		ctx.JSON(http.StatusOK, user)
+	}
+}
+
+func UserUpdateHandler() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		var req types.UpdateUserRequest
+		urlId := ctx.Param("id")
+		if err := ctx.Bind(&req); err != nil {
+			resp := types.UpdateUserResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+			return
+		}
+		id, err := strconv.Atoi(urlId)
+		if err != nil {
+			resp := types.UpdateUserResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+			return
+		}
+		req.ID = id
+		resp, _ := service.UpdateUser(ctx, &req)
+		ctx.JSON(http.StatusOK, *resp)
 	}
 }
