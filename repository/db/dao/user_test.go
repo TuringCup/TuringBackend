@@ -30,8 +30,9 @@ func TestFindUser(t *testing.T) {
 	user, err := userdao.FindUserById(1)
 	if err != nil {
 		err.Error()
+		return
 	}
-	fmt.Println(*user)
+	fmt.Println(user)
 }
 
 func TestUpdateUser(t *testing.T) {
