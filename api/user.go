@@ -79,8 +79,8 @@ func UserFindHandler() gin.HandlerFunc {
 		user, err := service.FindUser(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.ERROR,
-				ErrorMsg:  err.Error(),
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
 			})
 			return
 		}
