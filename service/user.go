@@ -8,7 +8,6 @@ import (
 
 	"strconv"
 
-
 	"github.com/TuringCup/TuringBackend/pkg/email"
 	errs "github.com/TuringCup/TuringBackend/pkg/errors"
 	"github.com/TuringCup/TuringBackend/repository/cache"
@@ -190,4 +189,28 @@ func FindUser(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUs
 		UpdatedTime: user.UpdatedAt.String(),
 	}
 	return resp, err
+}
+func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.UpdateUserResponse, err error) {
+	userdao := dao.NewUserDao(ctx)
+	user := &model.User{
+		Name:     req.Name,
+		Password: req.Password,
+		Phone:    req.Phone,
+		School:   req.School,
+		SchoolID: req.SchoolId,
+		Email:    req.Email,
+	}
+	_, err = userdao.UpdateUser(req.ID, user)
+	if err != nil {
+		resp := &types.UpdateUserResponse{
+			ErrorCode: errs.UserNotExist,
+			ErrorMsg:  errs.GetMsg(errs.UserNotExist),
+		}
+		return resp, err
+	}
+	resp = &types.UpdateUserResponse{
+		ErrorCode: errs.SUCCESS,
+		ErrorMsg:  errs.GetMsg(errs.SUCCESS),
+	}
+	return resp, nil
 }

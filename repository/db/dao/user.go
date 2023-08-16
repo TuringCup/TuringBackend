@@ -2,7 +2,6 @@ package dao
 
 import (
 	"context"
-
 	"github.com/TuringCup/TuringBackend/repository/db/model"
 	"gorm.io/gorm"
 )
@@ -34,7 +33,6 @@ func (dao *UserDao) ExistOrNotByUserName(name string) (user *model.User, exist b
 	return user, true, nil
 }
 
-
 func (dao *UserDao) ExistOrNotByEmail(email string) (user *model.User, exist bool, err error) {
 	var count int64
 	err = dao.DB.Model(&model.User{}).Where("email = ?", email).Count(&count).Error
@@ -51,8 +49,19 @@ func (dao *UserDao) ExistOrNotByEmail(email string) (user *model.User, exist boo
 func (dao *UserDao) FindUserById(id int) (user *model.User, err error) {
 	err = dao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
 	if err != nil {
-		return user, err
+		return nil, err
 	}
 	return user, nil
+}
 
+func (dao *UserDao) UpdateUser(id int, user *model.User) (bool, error) {
+	userInDb, err := dao.FindUserById(id)
+	if err != nil {
+		return false, err
+	}
+	err = dao.DB.Model(&model.User{}).Where("id=?", userInDb.ID).Updates(user).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
