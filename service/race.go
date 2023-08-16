@@ -86,8 +86,18 @@ func RacePage(ctx *gin.Context, req *types.PageRequest) (resp *types.PageRespons
 		}
 		return resp
 	}
+	var racesType []types.Race
+	for _, race := range races {
+		raceTemp := types.Race{
+			ID:          int(race.ID),
+			Name:        race.Name,
+			CreatedTime: race.CreatedAt.String(),
+			UpdatedTime: race.UpdatedAt.String(),
+		}
+		racesType = append(racesType, raceTemp)
+	}
 	resp = &types.PageResponse{
-		Data:      races,
+		Data:      racesType,
 		ErrorCode: errors.SUCCESS,
 		ErrorMsg:  errors.GetMsg(errors.SUCCESS),
 	}

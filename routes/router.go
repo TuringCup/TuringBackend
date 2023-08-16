@@ -46,7 +46,7 @@ func NewRouter(r *gin.Engine) {
 				}
 
 			}
-			race.GET("/")
+			race.GET("/", Api.RaceHandler())
 			race.GET("/:rid", Api.RaceFindHandler())
 			race.GET("/:rid/progress")
 		}

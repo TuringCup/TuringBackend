@@ -67,6 +67,14 @@ func RaceHandler() gin.HandlerFunc {
 			ctx.JSON(http.StatusOK, resp)
 			return
 		}
+		if page <= 0 || perPage <= 0 {
+			resp := types.PageResponse{
+				ErrorCode: errors.InvalidParams,
+				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			}
+			ctx.JSON(http.StatusOK, resp)
+			return
+		}
 		pageReq.Page = page
 		pageReq.PerPage = perPage
 		resp := service.RacePage(ctx, &pageReq)
