@@ -75,3 +75,21 @@ func RaceAdd(ctx *gin.Context, req *types.AddRaceRequest) (resp *types.AddRaceRe
 	}
 	return resp
 }
+
+func RacePage(ctx *gin.Context, req *types.PageRequest) (resp *types.PageResponse) {
+	racedao := dao.NewRaceDao(ctx)
+	races, err := racedao.FindRaceByPage(req.Page, req.PerPage)
+	if err != nil {
+		resp := &types.PageResponse{
+			ErrorCode: errors.ERROR,
+			ErrorMsg:  errors.GetMsg(errors.ERROR),
+		}
+		return resp
+	}
+	resp = &types.PageResponse{
+		Data:      races,
+		ErrorCode: errors.SUCCESS,
+		ErrorMsg:  errors.GetMsg(errors.SUCCESS),
+	}
+	return resp
+}

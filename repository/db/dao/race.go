@@ -41,3 +41,18 @@ func (dao *RaceDao) FindRaceById(id int) (race *model.Race, err error) {
 	}
 	return race, nil
 }
+
+func (dao *RaceDao) GetRaceCount() (count int64, err error) {
+	err = dao.DB.Model(&model.Race{}).Count(&count).Error
+	if err != nil {
+		return -1, err
+	}
+	return count, nil
+}
+
+func (dao *RaceDao) FindRaceByPage(page int, perPage int) (races []model.Race, err error) {
+	if err = dao.DB.Model(&model.Race{}).Offset((page - 1) * perPage).Find(&races).Limit(perPage).Error; err != nil {
+		return nil, err
+	}
+	return races, nil
+}

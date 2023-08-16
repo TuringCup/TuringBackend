@@ -1,5 +1,10 @@
 package types
 
+type GetAllRacesRequest struct {
+	Page    int `json:"page"`
+	PerPage int `json:"perPage"`
+}
+
 type GetAllRacesResponse struct {
 	ErrorCode int    `json:"errorCode"`
 	ErrorMsg  string `json:"errorMsg"`
