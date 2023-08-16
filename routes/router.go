@@ -4,10 +4,33 @@ import (
 	"net/http"
 
 	Api "github.com/TuringCup/TuringBackend/api"
+	"github.com/TuringCup/TuringBackend/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func NewRouter(r *gin.Engine) {
+	authed := r.Group("/api")
+	authed.Use(middleware.AuthMiddleWare())
+	{
+		user := authed.Group("/user")
+		{
+			user.PUT("/:id", Api.UserUpdateHandler())
+			user.GET("/:id", Api.UserFindHandler())
+		}
+		race := authed.Group("/race")
+		{
+			teams := race.Group(":rid/team")
+			{
+				team := teams.Group("/:tid")
+				{
+					team.POST("/join")
+					team.POST("/upload")
+					team.DELETE("/")
+					team.DELETE("/quit")
+				}
+			}
+		}
+	}
 	api := r.Group("/api")
 	{
 		api.GET("/ping", func(ctx *gin.Context) {
@@ -16,11 +39,9 @@ func NewRouter(r *gin.Engine) {
 
 		user := api.Group("/user")
 		{
-			user.GET("/login")
+			user.GET("/login", Api.UserLoginHandler())
 			user.POST("/register", Api.UserRegisterHandler())
 			user.POST("/register/validcode", Api.UserRegisterValidCodeHandler())
-			user.PUT("/:id", Api.UserUpdateHandler())
-			user.GET("/:id", Api.UserFindHandler())
 			user.GET("/refreshtoken")
 		}
 
@@ -36,13 +57,8 @@ func NewRouter(r *gin.Engine) {
 
 				teams.GET("/")
 				teams.POST("/")
-
 				{
 					team.GET("/")
-					team.POST("/join")
-					team.POST("/upload")
-					team.DELETE("/")
-					team.DELETE("/quit")
 				}
 
 			}

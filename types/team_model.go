@@ -22,7 +22,7 @@ type GetAllTeamsResponse struct {
 }
 
 type BuildTeamRequest struct {
-	Token string `json:"token"`
+	TeamName string `json:"teamname"`
 }
 type BuildTeamResponse struct {
 	ErrorMsg  string `json:"errorMsg"`
