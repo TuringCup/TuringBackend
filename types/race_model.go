@@ -6,17 +6,17 @@ type GetAllRacesRequest struct {
 }
 
 type GetAllRacesResponse struct {
-	ErrorCode int    `json:"errorCode"`
-	ErrorMsg  string `json:"errorMsg"`
-	Races     []Race `json:"races"`
+	StatusCode int    `json:"statusCode"`
+	StatusMsg  string `json:"statusMsg"`
+	Races      []Race `json:"races"`
 }
 type GetRaceRequest struct {
 	ID string `json:"id"`
 }
 type GetRaceResponse struct {
-	Race      Race   `json:"race"`
-	ErrorCode int    `json:"errorCode"`
-	ErrorMsg  string `json:"errorMsg"`
+	Race       Race   `json:"race"`
+	StatusCode int    `json:"statusCode"`
+	StatusMsg  string `json:"statusMsg"`
 }
 
 // Race
@@ -31,6 +31,6 @@ type AddRaceRequest struct {
 	Name string `json:"name" form:"name"`
 }
 type AddRaceResponse struct {
-	ErrorCode int    `json:"errorCode"`
-	ErrorMsg  string `json:"errorMsg"`
+	StatusCode int    `json:"statusCode"`
+	StatusMsg  string `json:"statusMsg"`
 }

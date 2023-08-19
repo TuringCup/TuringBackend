@@ -20,8 +20,8 @@ func UserRegisterHandler() gin.HandlerFunc {
 			ctx.JSON(
 				http.StatusOK,
 				types.RegisterResponse{
-					ErrorCode: errors.InvalidParams,
-					ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+					StatusCode: errors.InvalidParams,
+					StatusMsg:  errors.GetMsg(errors.InvalidParams),
 				},
 			)
 			return
@@ -40,8 +40,8 @@ func UserLoginHandler() gin.HandlerFunc {
 		if err := ctx.Bind(&req); err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
 			resp := types.LoginResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
@@ -62,8 +62,8 @@ func UserRegisterValidCodeHandler() gin.HandlerFunc {
 		if err := ctx.Bind(&req); err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
 			resp := types.ValidCodeResponse{
-				ErrorCode: errors.ValidCodeError,
-				ErrorMsg:  errors.GetMsg(errors.ValidCodeError),
+				StatusCode: errors.ValidCodeError,
+				StatusMsg:  errors.GetMsg(errors.ValidCodeError),
 			}
 			ctx.JSON(http.StatusOK, resp)
 		}
@@ -95,7 +95,7 @@ func UserFindHandler() gin.HandlerFunc {
 			})
 			return
 		}
-    user, err := service.UserFind(ctx.Request.Context(), &request)
+		user, err := service.UserFind(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
 				ErrorCode: errors.InvalidParams,
@@ -131,8 +131,8 @@ func UserUpdateHandler() gin.HandlerFunc {
 		}
 		if err := ctx.Bind(&req); err != nil {
 			resp := types.UpdateUserResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
@@ -140,8 +140,8 @@ func UserUpdateHandler() gin.HandlerFunc {
 		id, err := strconv.Atoi(urlId)
 		if err != nil {
 			resp := types.UpdateUserResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return

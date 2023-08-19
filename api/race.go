@@ -25,8 +25,8 @@ func RaceAddHandler() gin.HandlerFunc {
 		var req types.AddRaceRequest
 		if err := ctx.Bind(&req); err != nil {
 			resp := types.AddRaceResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
@@ -43,8 +43,8 @@ func RaceHandler() gin.HandlerFunc {
 		perPageStr, isGetPerPage := ctx.GetQuery("perPage")
 		if !isGetPage || !isGetPerPage {
 			resp := types.PageResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
@@ -52,8 +52,8 @@ func RaceHandler() gin.HandlerFunc {
 		page, err := strconv.Atoi(pageStr)
 		if err != nil {
 			resp := types.PageResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
@@ -61,16 +61,16 @@ func RaceHandler() gin.HandlerFunc {
 		perPage, err := strconv.Atoi(perPageStr)
 		if err != nil {
 			resp := types.PageResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
 		}
 		if page <= 0 || perPage <= 0 {
 			resp := types.PageResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return

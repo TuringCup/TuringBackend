@@ -9,8 +9,8 @@ type LoginRequest struct {
 type LoginResponse struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
-	ErrorMsg     string `json:"errorMsg"`
-	ErrorCode    int    `json:"errorCode"`
+	StatusMsg    string `json:"statusMsg"`
+	StatusCode   int    `json:"statusCode"`
 }
 
 // register
@@ -27,8 +27,8 @@ type RegisterRequest struct {
 }
 
 type RegisterResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode int    `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 
 type ValidCodeRequest struct {
@@ -36,8 +36,8 @@ type ValidCodeRequest struct {
 }
 
 type ValidCodeResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode int    `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 
 // refreshtoken
@@ -63,8 +63,8 @@ type GetUserResponse struct {
 	SchoolId    string `json:"schoolId"`
 	CreatedTime string `json:"createdTime"`
 	UpdatedTime string `json:"updatedTime"`
-	ErrorMsg    string `json:"errorMsg"`
-	ErrorCode   int    `json:"errorCode"`
+	ErrorMsg    string `json:"statusMsg"`
+	ErrorCode   int    `json:"statusCode"`
 }
 
 type UpdateUserRequest struct {
@@ -80,6 +80,6 @@ type UpdateUserRequest struct {
 }
 
 type UpdateUserResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode int    `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }

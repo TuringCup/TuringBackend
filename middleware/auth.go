@@ -16,24 +16,24 @@ func AuthMiddleWare() gin.HandlerFunc {
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.Forbidden,
-				"ErrorMsg":  errors.GetMsg(errors.Forbidden),
+				"StatusCode": errors.Forbidden,
+				"StatusMsg":  errors.GetMsg(errors.Forbidden),
 			})
 			ctx.Abort()
 			return
 		}
 		if claim.IP != client_ip {
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.Forbidden,
-				"ErrorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
+				"StatusCode": errors.Forbidden,
+				"StatusMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
 			})
 			ctx.Abort()
 			return
 		}
 		if claim.ExpiresAt < time.Now().Unix() {
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.TokenTimeout,
-				"ErrorMsg":  errors.GetMsg(errors.TokenTimeout),
+				"StatusCode": errors.TokenTimeout,
+				"StatusMsg":  errors.GetMsg(errors.TokenTimeout),
 			})
 			ctx.Abort()
 			return

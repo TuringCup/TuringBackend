@@ -14,18 +14,18 @@ func RaceFind(ctx *gin.Context, req *types.GetRaceRequest) (resp *types.GetRaceR
 	id, err := strconv.Atoi(req.ID)
 	if err != nil {
 		resp = &types.GetRaceResponse{
-			Race:      types.Race{},
-			ErrorCode: errors.InvalidParams,
-			ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+			Race:       types.Race{},
+			StatusCode: errors.InvalidParams,
+			StatusMsg:  errors.GetMsg(errors.InvalidParams),
 		}
 		return resp
 	}
 	race, err := racedao.FindRaceById(id)
 	if err != nil {
 		resp = &types.GetRaceResponse{
-			Race:      types.Race{},
-			ErrorCode: errors.RaceNotExist,
-			ErrorMsg:  errors.GetMsg(errors.RaceNotExist),
+			Race:       types.Race{},
+			StatusCode: errors.RaceNotExist,
+			StatusMsg:  errors.GetMsg(errors.RaceNotExist),
 		}
 		return resp
 	}
@@ -36,8 +36,8 @@ func RaceFind(ctx *gin.Context, req *types.GetRaceRequest) (resp *types.GetRaceR
 			CreatedTime: race.CreatedAt.String(),
 			UpdatedTime: race.UpdatedAt.String(),
 		},
-		ErrorCode: errors.SUCCESS,
-		ErrorMsg:  errors.GetMsg(errors.SUCCESS),
+		StatusCode: errors.SUCCESS,
+		StatusMsg:  errors.GetMsg(errors.SUCCESS),
 	}
 	return resp
 }
@@ -47,15 +47,15 @@ func RaceAdd(ctx *gin.Context, req *types.AddRaceRequest) (resp *types.AddRaceRe
 	_, exist, err := racedao.ExistOrNotByRaceName(req.Name)
 	if err != nil {
 		resp = &types.AddRaceResponse{
-			ErrorCode: errors.ERROR,
-			ErrorMsg:  errors.GetMsg(errors.ERROR),
+			StatusCode: errors.ERROR,
+			StatusMsg:  errors.GetMsg(errors.ERROR),
 		}
 		return resp
 	}
 	if exist {
 		resp = &types.AddRaceResponse{
-			ErrorCode: errors.RaceNameUsed,
-			ErrorMsg:  errors.GetMsg(errors.RaceNameUsed),
+			StatusCode: errors.RaceNameUsed,
+			StatusMsg:  errors.GetMsg(errors.RaceNameUsed),
 		}
 		return resp
 	}
@@ -64,14 +64,14 @@ func RaceAdd(ctx *gin.Context, req *types.AddRaceRequest) (resp *types.AddRaceRe
 	})
 	if err != nil {
 		resp = &types.AddRaceResponse{
-			ErrorCode: errors.ERROR,
-			ErrorMsg:  errors.GetMsg(errors.ERROR),
+			StatusCode: errors.ERROR,
+			StatusMsg:  errors.GetMsg(errors.ERROR),
 		}
 		return resp
 	}
 	resp = &types.AddRaceResponse{
-		ErrorCode: errors.SUCCESS,
-		ErrorMsg:  errors.GetMsg(errors.SUCCESS),
+		StatusCode: errors.SUCCESS,
+		StatusMsg:  errors.GetMsg(errors.SUCCESS),
 	}
 	return resp
 }
@@ -81,8 +81,8 @@ func RacePage(ctx *gin.Context, req *types.PageRequest) (resp *types.PageRespons
 	races, err := racedao.FindRaceByPage(req.Page, req.PerPage)
 	if err != nil {
 		resp := &types.PageResponse{
-			ErrorCode: errors.ERROR,
-			ErrorMsg:  errors.GetMsg(errors.ERROR),
+			StatusCode: errors.ERROR,
+			StatusMsg:  errors.GetMsg(errors.ERROR),
 		}
 		return resp
 	}
@@ -97,9 +97,9 @@ func RacePage(ctx *gin.Context, req *types.PageRequest) (resp *types.PageRespons
 		racesType = append(racesType, raceTemp)
 	}
 	resp = &types.PageResponse{
-		Data:      racesType,
-		ErrorCode: errors.SUCCESS,
-		ErrorMsg:  errors.GetMsg(errors.SUCCESS),
+		Data:       racesType,
+		StatusCode: errors.SUCCESS,
+		StatusMsg:  errors.GetMsg(errors.SUCCESS),
 	}
 	return resp
 }

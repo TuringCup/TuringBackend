@@ -25,8 +25,8 @@ type BuildTeamRequest struct {
 	TeamName string `json:"teamname"`
 }
 type BuildTeamResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 
 type JoinTeamRequest struct {
@@ -34,8 +34,8 @@ type JoinTeamRequest struct {
 	Tid string `json:"tid"`
 }
 type JoinTeamResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 type DismissTeamRequest struct {
 	Rid   string `json:"rid"`
@@ -43,23 +43,23 @@ type DismissTeamRequest struct {
 	Token string `json:"token"`
 }
 type DismissTeamResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 type UploadRequest struct {
 	Rid string `json:"rid"`
 	Tid string `json:"tid"`
 }
 type UploadResponse struct {
-	Md5       string `json:"md5"`
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	Md5        string `json:"md5"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }
 type QuitTeamRequest struct {
 	Rid string `json:"rId"`
 	Tid string `json:"tId"`
 }
 type QuitTeamResponse struct {
-	ErrorMsg  string `json:"errorMsg"`
-	ErrorCode string `json:"errorCode"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int    `json:"statusCode"`
 }

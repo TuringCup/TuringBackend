@@ -6,7 +6,7 @@ type PageRequest struct {
 }
 
 type PageResponse struct {
-	Data      any
-	ErrorCode int    `json:"errorCode"`
-	ErrorMsg  string `json:"errorMsg"`
+	Data       any
+	StatusCode int    `json:"errorCode"`
+	StatusMsg  string `json:"errorMsg"`
 }

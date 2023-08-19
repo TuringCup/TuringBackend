@@ -24,8 +24,8 @@ func UserReigsterSendValidCode(ctx context.Context, req *types.ValidCodeRequest)
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.ValidCodeResponse{
-			ErrorCode: errs.ValidCodeGenError,
-			ErrorMsg:  errs.GetMsg(errs.ValidCodeGenError),
+			StatusCode: errs.ValidCodeGenError,
+			StatusMsg:  errs.GetMsg(errs.ValidCodeGenError),
 		}
 		return
 	}
@@ -34,15 +34,15 @@ func UserReigsterSendValidCode(ctx context.Context, req *types.ValidCodeRequest)
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.ValidCodeResponse{
-			ErrorCode: errs.SendValidCodeError,
-			ErrorMsg:  errs.GetMsg(errs.SendValidCodeError),
+			StatusCode: errs.SendValidCodeError,
+			StatusMsg:  errs.GetMsg(errs.SendValidCodeError),
 		}
 		return
 	}
 
 	resp = types.ValidCodeResponse{
-		ErrorCode: errs.SUCCESS,
-		ErrorMsg:  errs.GetMsg(errs.SUCCESS),
+		StatusCode: errs.SUCCESS,
+		StatusMsg:  errs.GetMsg(errs.SUCCESS),
 	}
 	return
 }
@@ -55,16 +55,16 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.RegisterResponse{
-			ErrorCode: errs.RegisterFailed,
-			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+			StatusCode: errs.RegisterFailed,
+			StatusMsg:  errs.GetMsg(errs.RegisterFailed),
 		}
 		return
 	}
 	if exist {
 		err = errors.New("用户名已经被注册")
 		resp = types.RegisterResponse{
-			ErrorCode: errs.UserNameUsed,
-			ErrorMsg:  errs.GetMsg(errs.UserNameUsed),
+			StatusCode: errs.UserNameUsed,
+			StatusMsg:  errs.GetMsg(errs.UserNameUsed),
 		}
 		return
 	}
@@ -72,8 +72,8 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.RegisterResponse{
-			ErrorCode: errs.RegisterFailed,
-			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+			StatusCode: errs.RegisterFailed,
+			StatusMsg:  errs.GetMsg(errs.RegisterFailed),
 		}
 		return
 	}
@@ -81,8 +81,8 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if exist {
 		err = errors.New("邮箱已经被注册")
 		resp = types.RegisterResponse{
-			ErrorCode: errs.EmailUsed,
-			ErrorMsg:  errs.GetMsg(errs.EmailUsed),
+			StatusCode: errs.EmailUsed,
+			StatusMsg:  errs.GetMsg(errs.EmailUsed),
 		}
 		return
 	}
@@ -93,8 +93,8 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.RegisterResponse{
-			ErrorCode: errs.ValidCodeError,
-			ErrorMsg:  errs.GetMsg(errs.ValidCodeError),
+			StatusCode: errs.ValidCodeError,
+			StatusMsg:  errs.GetMsg(errs.ValidCodeError),
 		}
 		return
 	}
@@ -104,8 +104,8 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.RegisterResponse{
-			ErrorCode: errs.RegisterFailed,
-			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+			StatusCode: errs.RegisterFailed,
+			StatusMsg:  errs.GetMsg(errs.RegisterFailed),
 		}
 		return
 	}
@@ -122,15 +122,15 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 	if err = userdao.CreateUser(user); err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.RegisterResponse{
-			ErrorCode: errs.RegisterFailed,
-			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+			StatusCode: errs.RegisterFailed,
+			StatusMsg:  errs.GetMsg(errs.RegisterFailed),
 		}
 		return
 	}
 
 	resp = types.RegisterResponse{
-		ErrorCode: errs.SUCCESS,
-		ErrorMsg:  errs.GetMsg(errs.SUCCESS),
+		StatusCode: errs.SUCCESS,
+		StatusMsg:  errs.GetMsg(errs.SUCCESS),
 	}
 	return
 }
@@ -142,8 +142,8 @@ func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = types.LoginResponse{
-			ErrorCode: errs.LoginFailed,
-			ErrorMsg:  errs.GetMsg(errs.LoginFailed),
+			StatusCode: errs.LoginFailed,
+			StatusMsg:  errs.GetMsg(errs.LoginFailed),
 		}
 		return
 	}
@@ -151,8 +151,8 @@ func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err
 		fmt.Fprintln(gin.DefaultWriter, req.Username+" not exist")
 		err = errors.New(errs.GetMsg(errs.UserNotExist))
 		resp = types.LoginResponse{
-			ErrorCode: errs.UserNotExist,
-			ErrorMsg:  errs.GetMsg(errs.UserNotExist),
+			StatusCode: errs.UserNotExist,
+			StatusMsg:  errs.GetMsg(errs.UserNotExist),
 		}
 		return
 	}
@@ -160,8 +160,8 @@ func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err
 	if err != nil {
 		fmt.Fprintln(gin.DefaultWriter, req.Username+" password wrong"+err.Error())
 		resp = types.LoginResponse{
-			ErrorCode: errs.UserPasswordWrong,
-			ErrorMsg:  errs.GetMsg(errs.UserPasswordWrong),
+			StatusCode: errs.UserPasswordWrong,
+			StatusMsg:  errs.GetMsg(errs.UserPasswordWrong),
 		}
 		return
 	}
@@ -169,16 +169,16 @@ func UserLogin(ctx *gin.Context, req *types.LoginRequest) (resp interface{}, err
 	if err != nil {
 		fmt.Fprintln(gin.DefaultWriter, req.Username+" password wrong"+err.Error())
 		resp = types.LoginResponse{
-			ErrorCode: errs.GenerateTokenError,
-			ErrorMsg:  errs.GetMsg(errs.GenerateTokenError),
+			StatusCode: errs.GenerateTokenError,
+			StatusMsg:  errs.GetMsg(errs.GenerateTokenError),
 		}
 		return
 	}
 	resp = types.LoginResponse{
 		Token:        access_token,
 		RefreshToken: refresh_token,
-		ErrorCode:    errs.SUCCESS,
-		ErrorMsg:     errs.GetMsg(errs.SUCCESS),
+		StatusCode:   errs.SUCCESS,
+		StatusMsg:    errs.GetMsg(errs.SUCCESS),
 	}
 
 	return
@@ -214,8 +214,8 @@ func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.
 	if err != nil {
 		fmt.Fprintln(gin.DefaultErrorWriter, err)
 		resp = &types.UpdateUserResponse{
-			ErrorCode: errs.RegisterFailed,
-			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+			StatusCode: errs.RegisterFailed,
+			StatusMsg:  errs.GetMsg(errs.RegisterFailed),
 		}
 		return
 	}
@@ -230,14 +230,14 @@ func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.
 	_, err = userdao.UpdateUser(req.ID, user)
 	if err != nil {
 		resp := &types.UpdateUserResponse{
-			ErrorCode: errs.UserNotExist,
-			ErrorMsg:  errs.GetMsg(errs.UserNotExist),
+			StatusCode: errs.UserNotExist,
+			StatusMsg:  errs.GetMsg(errs.UserNotExist),
 		}
 		return resp, err
 	}
 	resp = &types.UpdateUserResponse{
-		ErrorCode: errs.SUCCESS,
-		ErrorMsg:  errs.GetMsg(errs.SUCCESS),
+		StatusCode: errs.SUCCESS,
+		StatusMsg:  errs.GetMsg(errs.SUCCESS),
 	}
 	return resp, nil
 }
