@@ -1,11 +1,11 @@
 package types
 
 type Team struct {
-	ID          int64  `json:"id"`
-	CapId       string `json:"capId"`
-	CreatedTime string `json:"createdTime"`
+	ID          int32  `json:"id"`
+	RId         int32  `json:"rId"`
 	Name        string `json:"name"`
-	RId         int64  `json:"rId"`
+	CapId       int32  `json:"capId"`
+	CreatedTime string `json:"createdTime"`
 	UpdatedTime string `json:"updatedTime"`
 }
 
@@ -15,10 +15,20 @@ type GetTeamRequest struct {
 }
 
 type GetTeamResponse struct {
-	Team Team `json:"team"`
+	Team       Team   `json:"team"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int32  `json:"statusCode"`
 }
+type GetAllTeamsRequest struct {
+	ID       int32  `json:"id"`
+	Token    string `json:"token"`
+	PageInfo PageInfo
+}
+
 type GetAllTeamsResponse struct {
-	Team []Team `json:"teams"`
+	Teams      []Team `json:"teams"`
+	StatusMsg  string `json:"statusMsg"`
+	StatusCode int32  `json:"statusCode"`
 }
 
 type BuildTeamRequest struct {
@@ -26,7 +36,7 @@ type BuildTeamRequest struct {
 }
 type BuildTeamResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 
 type JoinTeamRequest struct {
@@ -35,7 +45,7 @@ type JoinTeamRequest struct {
 }
 type JoinTeamResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 type DismissTeamRequest struct {
 	Rid   string `json:"rid"`
@@ -44,7 +54,7 @@ type DismissTeamRequest struct {
 }
 type DismissTeamResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 type UploadRequest struct {
 	Rid string `json:"rid"`
@@ -53,7 +63,7 @@ type UploadRequest struct {
 type UploadResponse struct {
 	Md5        string `json:"md5"`
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 type QuitTeamRequest struct {
 	Rid string `json:"rId"`
@@ -61,5 +71,5 @@ type QuitTeamRequest struct {
 }
 type QuitTeamResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }

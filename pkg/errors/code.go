@@ -20,13 +20,12 @@ const (
 	ValidCodeError    = 20001
 	ValidCodeGenError = 20002
 
-
 	//RaceErrorCode
 	RaceNotExist = 30002
 	RaceNameUsed = 30005
-
+	//TeamErrorCode
+	TeamNotExist = 40002
 	// Token
 	GenerateTokenError = 20003
 	TokenTimeout       = 20004
-
 )

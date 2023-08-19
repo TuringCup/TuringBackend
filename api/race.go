@@ -36,13 +36,13 @@ func RaceAddHandler() gin.HandlerFunc {
 	}
 }
 
-func RaceHandler() gin.HandlerFunc {
+func RaceFindAllHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		var pageReq types.PageRequest
+		var req types.GetAllRacesRequest
 		pageStr, isGetPage := ctx.GetQuery("page")
 		perPageStr, isGetPerPage := ctx.GetQuery("perPage")
 		if !isGetPage || !isGetPerPage {
-			resp := types.PageResponse{
+			resp := types.GetAllRacesResponse{
 				StatusCode: errors.InvalidParams,
 				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
@@ -51,7 +51,7 @@ func RaceHandler() gin.HandlerFunc {
 		}
 		page, err := strconv.Atoi(pageStr)
 		if err != nil {
-			resp := types.PageResponse{
+			resp := types.GetAllRacesResponse{
 				StatusCode: errors.InvalidParams,
 				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
@@ -60,7 +60,7 @@ func RaceHandler() gin.HandlerFunc {
 		}
 		perPage, err := strconv.Atoi(perPageStr)
 		if err != nil {
-			resp := types.PageResponse{
+			resp := types.GetAllRacesResponse{
 				StatusCode: errors.InvalidParams,
 				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
@@ -68,16 +68,16 @@ func RaceHandler() gin.HandlerFunc {
 			return
 		}
 		if page <= 0 || perPage <= 0 {
-			resp := types.PageResponse{
+			resp := types.GetAllRacesResponse{
 				StatusCode: errors.InvalidParams,
 				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			}
 			ctx.JSON(http.StatusOK, resp)
 			return
 		}
-		pageReq.Page = page
-		pageReq.PerPage = perPage
-		resp := service.RacePage(ctx, &pageReq)
+		req.PageInfo.Page = int32(page)
+		req.PageInfo.PerPage = int32(perPage)
+		resp := service.RacePage(ctx, &req)
 		ctx.JSON(http.StatusOK, resp)
 	}
 }

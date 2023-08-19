@@ -10,7 +10,7 @@ type LoginResponse struct {
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
 	StatusMsg    string `json:"statusMsg"`
-	StatusCode   int    `json:"statusCode"`
+	StatusCode   int32  `json:"statusCode"`
 }
 
 // register
@@ -28,7 +28,7 @@ type RegisterRequest struct {
 
 type RegisterResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 
 type ValidCodeRequest struct {
@@ -37,7 +37,7 @@ type ValidCodeRequest struct {
 
 type ValidCodeResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }
 
 // refreshtoken
@@ -54,7 +54,7 @@ type GetUserRequest struct {
 	ID string `json:"id"`
 }
 type GetUserResponse struct {
-	ID          int    `json:"id"`
+	ID          int32  `json:"id"`
 	Name        string `json:"name"`
 	Password    string `json:"password"`
 	Phone       string `json:"phone"`
@@ -63,12 +63,12 @@ type GetUserResponse struct {
 	SchoolId    string `json:"schoolId"`
 	CreatedTime string `json:"createdTime"`
 	UpdatedTime string `json:"updatedTime"`
-	ErrorMsg    string `json:"statusMsg"`
-	ErrorCode   int    `json:"statusCode"`
+	StatusMsg   string `json:"statusMsg"`
+	StatusCode  int32  `json:"statusCode"`
 }
 
 type UpdateUserRequest struct {
-	ID          int    `json:"id"`
+	ID          int32  `json:"id"`
 	Name        string `json:"name"`
 	Password    string `json:"password"`
 	Phone       string `json:"phone"`
@@ -81,5 +81,5 @@ type UpdateUserRequest struct {
 
 type UpdateUserResponse struct {
 	StatusMsg  string `json:"statusMsg"`
-	StatusCode int    `json:"statusCode"`
+	StatusCode int32  `json:"statusCode"`
 }

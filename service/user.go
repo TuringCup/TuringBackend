@@ -191,12 +191,12 @@ func UserFind(ctx context.Context, req *types.GetUserRequest) (resp *types.GetUs
 	if err != nil {
 		return resp, err
 	}
-	user, err := userdao.FindUserById(id)
+	user, err := userdao.FindUserById(int32(id))
 	if err != nil {
 		return resp, err
 	}
 	resp = &types.GetUserResponse{
-		ID:          int(user.ID),
+		ID:          user.ID,
 		Name:        user.Name,
 		Password:    user.Password,
 		Phone:       user.Phone,

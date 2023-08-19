@@ -83,28 +83,28 @@ func UserFindHandler() gin.HandlerFunc {
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			})
 			return
 		}
 		if id, err := strconv.Atoi(request.ID); claim.ID != id || err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.Forbidden,
-				ErrorMsg:  errors.GetMsg(errors.Forbidden),
+				StatusCode: errors.Forbidden,
+				StatusMsg:  errors.GetMsg(errors.Forbidden),
 			})
 			return
 		}
 		user, err := service.UserFind(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			})
 			return
 		}
-		user.ErrorCode = errors.SUCCESS
-		user.ErrorMsg = errors.GetMsg(errors.SUCCESS)
+		user.StatusCode = errors.SUCCESS
+		user.StatusMsg = errors.GetMsg(errors.SUCCESS)
 		ctx.JSON(http.StatusOK, user)
 	}
 }
@@ -117,15 +117,15 @@ func UserUpdateHandler() gin.HandlerFunc {
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.InvalidParams,
-				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
+				StatusCode: errors.InvalidParams,
+				StatusMsg:  errors.GetMsg(errors.InvalidParams),
 			})
 			return
 		}
 		if id, err := strconv.Atoi(urlId); claim.ID != id || err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
-				ErrorCode: errors.Forbidden,
-				ErrorMsg:  errors.GetMsg(errors.Forbidden),
+				StatusCode: errors.Forbidden,
+				StatusMsg:  errors.GetMsg(errors.Forbidden),
 			})
 			return
 		}

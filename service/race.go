@@ -31,7 +31,7 @@ func RaceFind(ctx *gin.Context, req *types.GetRaceRequest) (resp *types.GetRaceR
 	}
 	resp = &types.GetRaceResponse{
 		Race: types.Race{
-			ID:          int(race.ID),
+			ID:          race.ID,
 			Name:        race.Name,
 			CreatedTime: race.CreatedAt.String(),
 			UpdatedTime: race.UpdatedAt.String(),
@@ -76,28 +76,28 @@ func RaceAdd(ctx *gin.Context, req *types.AddRaceRequest) (resp *types.AddRaceRe
 	return resp
 }
 
-func RacePage(ctx *gin.Context, req *types.PageRequest) (resp *types.PageResponse) {
+func RacePage(ctx *gin.Context, req *types.GetAllRacesRequest) (resp *types.GetAllRacesResponse) {
 	racedao := dao.NewRaceDao(ctx)
-	races, err := racedao.FindRaceByPage(req.Page, req.PerPage)
+	races, err := racedao.FindRaceByPage(req.PageInfo.Page, req.PageInfo.PerPage)
 	if err != nil {
-		resp := &types.PageResponse{
+		resp := &types.GetAllRacesResponse{
 			StatusCode: errors.ERROR,
 			StatusMsg:  errors.GetMsg(errors.ERROR),
 		}
 		return resp
 	}
-	var racesType []types.Race
+	var racesInType []types.Race
 	for _, race := range races {
 		raceTemp := types.Race{
-			ID:          int(race.ID),
+			ID:          race.ID,
 			Name:        race.Name,
 			CreatedTime: race.CreatedAt.String(),
 			UpdatedTime: race.UpdatedAt.String(),
 		}
-		racesType = append(racesType, raceTemp)
+		racesInType = append(racesInType, raceTemp)
 	}
-	resp = &types.PageResponse{
-		Data:       racesType,
+	resp = &types.GetAllRacesResponse{
+		Races:      racesInType,
 		StatusCode: errors.SUCCESS,
 		StatusMsg:  errors.GetMsg(errors.SUCCESS),
 	}

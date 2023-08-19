@@ -46,7 +46,7 @@ func (dao *UserDao) ExistOrNotByEmail(email string) (user *model.User, exist boo
 	return user, true, nil
 }
 
-func (dao *UserDao) FindUserById(id int) (user *model.User, err error) {
+func (dao *UserDao) FindUserById(id int32) (user *model.User, err error) {
 	err = dao.DB.Model(&model.User{}).Where("id=?", id).First(&user).Error
 	if err != nil {
 		return nil, err
@@ -54,7 +54,7 @@ func (dao *UserDao) FindUserById(id int) (user *model.User, err error) {
 	return user, nil
 }
 
-func (dao *UserDao) UpdateUser(id int, user *model.User) (bool, error) {
+func (dao *UserDao) UpdateUser(id int32, user *model.User) (bool, error) {
 	userInDb, err := dao.FindUserById(id)
 	if err != nil {
 		return false, err

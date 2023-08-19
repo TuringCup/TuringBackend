@@ -15,13 +15,14 @@ var ErrorMsg = map[int]string{
 	ValidCodeGenError:     "验证码生成错误",
 	LoginFailed:           "登录失败",
 
-	RaceNotExist:          "比赛不存在",
-	RaceNameUsed:          "队伍名已经被使用",
+	RaceNotExist: "比赛不存在",
+	RaceNameUsed: "队伍名已经被使用",
 
-	GenerateTokenError:    "生成Token失败",
-	Forbidden:             "Forbidden",
-	TokenTimeout:          "请重新登录",
+	TeamNotExist: "队伍不存在",
 
+	GenerateTokenError: "生成Token失败",
+	Forbidden:          "Forbidden",
+	TokenTimeout:       "请重新登录",
 }
 
 func GetMsg(code int) string {
