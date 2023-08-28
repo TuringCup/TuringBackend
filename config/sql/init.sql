@@ -2,7 +2,7 @@
 -- 创建数据表User
 create table turingcup.users 
 (
-	id int autot_increment,
+	id int auto_increment,
 	name varchar(32) not null,
 	password varchar(255) not null,
 	phone varchar(11),
