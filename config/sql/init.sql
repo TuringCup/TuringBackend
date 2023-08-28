@@ -48,10 +48,10 @@ create table turingcup.team_records (
 
 -- 创建数据表CircleRaceInfo
 create table turingcup.circle_race_infos (
+	id int auto_increment,
 	tid int not null,
-	rid int not null,
 	score int,
-	primary key(tid, rid)
+	primary key(id)
 );
 -- 创建数据表Round
 create table turingcup.rounds(
