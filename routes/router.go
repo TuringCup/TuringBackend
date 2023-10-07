@@ -16,6 +16,7 @@ func NewRouter(r *gin.Engine) {
 		{
 			user.PUT("/:id", Api.UserUpdateHandler())
 			user.GET("/:id", Api.UserFindHandler())
+			user.POST("/upload", Api.UserUploadFile())
 		}
 		race := authed.Group("/race")
 		{
@@ -41,7 +42,7 @@ func NewRouter(r *gin.Engine) {
 		{
 			user.GET("/login", Api.UserLoginHandler())
 			user.POST("/register", Api.UserRegisterHandler())
-			user.POST("/register/validcode", Api.UserRegisterValidCodeHandler())
+			// user.POST("/register/validcode", Api.UserRegisterValidCodeHandler())
 			user.GET("/refreshtoken")
 		}
 

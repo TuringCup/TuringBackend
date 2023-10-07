@@ -15,15 +15,15 @@ type LoginResponse struct {
 
 // register
 type RegisterRequest struct {
-	Username  string `form:"username"`
-	Password  string `form:"password"`
-	Email     string `form:"email"`
-	Province  string `form:"province"`
-	City      string `form:"city"`
-	School    string `form:"school"`
-	SchoolId  string `form:"schoolId"`
-	Phone     string `form:"phone"`
-	ValidCode string `form:"validcode"`
+	Username string `form:"username"`
+	Password string `form:"password"`
+	Email    string `form:"email"`
+	Province string `form:"province"`
+	City     string `form:"city"`
+	School   string `form:"school"`
+	SchoolId string `form:"schoolId"`
+	Phone    string `form:"phone"`
+	// ValidCode string `form:"validcode"`
 }
 
 type RegisterResponse struct {
@@ -80,6 +80,11 @@ type UpdateUserRequest struct {
 }
 
 type UpdateUserResponse struct {
+	ErrorMsg  string `json:"errorMsg"`
+	ErrorCode int    `json:"errorCode"`
+}
+
+type UploadFileResponse struct {
 	ErrorMsg  string `json:"errorMsg"`
 	ErrorCode int    `json:"errorCode"`
 }

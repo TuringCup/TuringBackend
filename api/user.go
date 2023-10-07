@@ -95,7 +95,7 @@ func UserFindHandler() gin.HandlerFunc {
 			})
 			return
 		}
-    user, err := service.UserFind(ctx.Request.Context(), &request)
+		user, err := service.UserFind(ctx.Request.Context(), &request)
 		if err != nil {
 			ctx.JSON(http.StatusOK, types.GetUserResponse{
 				ErrorCode: errors.InvalidParams,
@@ -149,5 +149,33 @@ func UserUpdateHandler() gin.HandlerFunc {
 		req.ID = id
 		resp, _ := service.UpdateUser(ctx, &req)
 		ctx.JSON(http.StatusOK, *resp)
+	}
+}
+
+func UserUploadFile() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		file, err := ctx.FormFile("file")
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
+				ErrorMsg:  "上传失败",
+				ErrorCode: errors.ERROR,
+			})
+			return
+		}
+		fmt.Println(file.Size)
+		// 保证文件大小小于16MB
+		if file.Size > (1 << 24) {
+			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
+				ErrorMsg:  "上传失败,文件大小太大",
+				ErrorCode: errors.ERROR,
+			})
+			return
+		}
+		fmt.Printf("%v\n", file.Filename)
+		ctx.SaveUploadedFile(file, "./data/userfiles/"+file.Filename)
+		ctx.JSON(http.StatusOK, types.UploadFileResponse{
+			ErrorMsg:  "上传成功",
+			ErrorCode: errors.SUCCESS,
+		})
 	}
 }
