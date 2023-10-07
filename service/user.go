@@ -87,17 +87,17 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 		return
 	}
 
-	// 校验邮箱验证码
-	err = cache.CheckValidCode(req.ValidCode)
+	// // 校验邮箱验证码
+	// err = cache.CheckValidCode(req.ValidCode)
 
-	if err != nil {
-		fmt.Fprintln(gin.DefaultErrorWriter, err)
-		resp = types.RegisterResponse{
-			ErrorCode: errs.ValidCodeError,
-			ErrorMsg:  errs.GetMsg(errs.ValidCodeError),
-		}
-		return
-	}
+	// if err != nil {
+	// 	fmt.Fprintln(gin.DefaultErrorWriter, err)
+	// 	resp = types.RegisterResponse{
+	// 		ErrorCode: errs.ValidCodeError,
+	// 		ErrorMsg:  errs.GetMsg(errs.ValidCodeError),
+	// 	}
+	// 	return
+	// }
 
 	// 加密密码
 	encrypt_password, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
@@ -241,3 +241,5 @@ func UpdateUser(ctx context.Context, req *types.UpdateUserRequest) (resp *types.
 	}
 	return resp, nil
 }
+
+// func UploadFile(ctx context.Context)

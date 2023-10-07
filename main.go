@@ -9,6 +9,7 @@ import (
 	v3 "github.com/SkyAPM/go2sky-plugins/gin/v3"
 	"github.com/SkyAPM/go2sky/reporter"
 	"github.com/TuringCup/TuringBackend/config"
+	"github.com/TuringCup/TuringBackend/middleware"
 	"github.com/TuringCup/TuringBackend/repository/cache"
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/routes"
@@ -33,6 +34,7 @@ func main() {
 		log.Fatalf("new reporter error %v \n", err)
 	}
 	r.Use(v3.Middleware(r, tracer))
+	r.Use(middleware.CorsMiddle())
 	routes.NewRouter(r)
 	ginpprof.Wrap(r)
 	r.Run(config.Conf.System.Host + ":" + config.Conf.System.Port)
