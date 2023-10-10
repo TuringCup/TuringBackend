@@ -6,9 +6,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/SkyAPM/go2sky"
-	gormPlugin "github.com/SkyAPM/go2sky-plugins/gorm"
-	"github.com/SkyAPM/go2sky/reporter"
 	"github.com/TuringCup/TuringBackend/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,17 +24,7 @@ func ConnectDB() {
 	if err != nil {
 		panic("connect to db failed,the error is " + err.Error())
 	}
-	re, err := reporter.NewLogReporter()
-	if err != nil {
-		log.Fatalf("init tracer error: %v", err)
-	}
-	defer re.Close()
-	// init tracer
-	tracer, err := go2sky.NewTracer("TuringDAO", go2sky.WithReporter(re))
-	if err != nil {
-		log.Fatalf("init tracer error: %v", err)
-	}
-	database.Use(gormPlugin.New(tracer, gormPlugin.WithPeerAddr(config.Conf.Skywalking.Host+":"+config.Conf.Skywalking.Port), gormPlugin.WithSqlDBType(gormPlugin.MYSQL)))
+
 	// set connection pool
 	sqlDb, err := database.DB()
 	sqlDb.SetMaxIdleConns(10)
