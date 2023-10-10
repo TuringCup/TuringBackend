@@ -54,6 +54,9 @@ services:
             - skywalking-oap
         networks:
             - turing
+        environment:
+            - SW_AGENT_REPORTER_GRPC_BACKEND_SERVICE=skywalking-oap:11800
+            - SW_AGENT_NAME=TuringCupBackend
     # 监控系统
     elasticsearch:
         image: elasticsearch:8.4.2
