@@ -1,20 +1,20 @@
 system:
-  host: localhost
+  host: 0.0.0.0
   port: 5001
 db:
-  host: localhost
+  host: db
   port: 3306
   dbName: turingcup
   charset: utf8mb4
   userName: turing
-  password: 123456789
+  password: Lird2002@@
 skywalking:
-  host: localhost
+  host: skywalking-oap
   port: 11800
 ses:
   id: AKIDHWkRAkG3WwLHC5vmbTQRI2Zt0wfDbppc
   key: gAcvmV1INFuLZcT7YovqY3MSL1VmqgNt
 redis:
-  host: localhost
+  host: redis
   port: 6379
   password:

@@ -12,7 +12,7 @@ services:
             - MYSQL_DATABASE=turingcup
             - TZ=Asia/Shanghai
             - MYSQL_USER=turing
-            - MYSQL_PASSWORD=123456789
+            - MYSQL_PASSWORD=Lird2002@@
         # 通过config/sql下面的sql脚本初始化数据库
         volumes:
             - ./config/sql:/docker-entrypoint-initdb.d/
@@ -36,22 +36,24 @@ services:
             - db
         networks:
             - turing
-    # turing:
-    #     container_name: TuringCupBackend
-    #     build: .
-    #     restart: always
-    #     links:
-    #         - redis
-    #         - db
-    #         - skywalking-oap
-    #     ports:
-    #         - "5001:5001"
-    #     depends_on:
-    #         - db
-    #         - redis
-    #         - skywalking-oap
-    #     networks:
-    #         - turing
+    turing:
+        container_name: TuringCupBackend
+        build: .
+        restart: always
+        volumes:
+            - "./data/userfiles:/app/data/userfiles"
+        links:
+            - redis
+            - db
+            - skywalking-oap
+        ports:
+            - "5001:5001"
+        depends_on:
+            - db
+            - redis
+            - skywalking-oap
+        networks:
+            - turing
     # 监控系统
     elasticsearch:
         image: elasticsearch:8.4.2

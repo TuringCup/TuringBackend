@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"strconv"
 
 	"github.com/TuringCup/TuringBackend/pkg/errors"
@@ -171,8 +172,20 @@ func UserUploadFile() gin.HandlerFunc {
 			})
 			return
 		}
+		token := ctx.Query("token")
+		claim, err := jwt.ParseToken(token)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
+				ErrorMsg:  "上传失败",
+				ErrorCode: errors.ERROR,
+			})
+			return
+		}
+		filename := claim.Username + "_" + strconv.Itoa(claim.ID) + filepath.Ext(file.Filename)
 		fmt.Printf("%v\n", file.Filename)
-		ctx.SaveUploadedFile(file, "./data/userfiles/"+file.Filename)
+		fmt.Printf("%v\n", claim)
+		fmt.Println(filename)
+		ctx.SaveUploadedFile(file, "./data/userfiles/"+filename)
 		ctx.JSON(http.StatusOK, types.UploadFileResponse{
 			ErrorMsg:  "上传成功",
 			ErrorCode: errors.SUCCESS,
