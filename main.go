@@ -8,6 +8,7 @@ import (
 	// "github.com/SkyAPM/go2sky/reporter"
 	"github.com/TuringCup/TuringBackend/config"
 	"github.com/TuringCup/TuringBackend/middleware"
+	"github.com/TuringCup/TuringBackend/pkg/utils/logger"
 	"github.com/TuringCup/TuringBackend/repository/cache"
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/routes"
@@ -18,6 +19,8 @@ import (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	config.InitConfig("")
+	logger.LoggerInit()
+	defer logger.Logger.Sync()
 	fmt.Println(config.Conf.System.Host)
 	fmt.Println(config.Conf.System.Port)
 	dao.ConnectDB()

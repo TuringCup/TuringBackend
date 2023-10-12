@@ -21,6 +21,10 @@ services:
             - "3306:3306"
         networks:
             - turing
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
     redis:
         container_name: TuringRedis
         image: redis
@@ -36,6 +40,11 @@ services:
             - db
         networks:
             - turing
+        healthcheck:
+            test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+            interval: 1s
+            timeout: 3s
+            retries: 5
     turing:
         container_name: TuringCupBackend
         build: .
@@ -43,15 +52,20 @@ services:
         volumes:
             - "./data/userfiles:/app/data/userfiles"
         links:
-            - redis
             - db
+            - redis
             - skywalking-oap
+            - skywalking-ui
+            - elasticsearch
         ports:
             - "5001:5001"
         depends_on:
-            - db
-            - redis
-            - skywalking-oap
+            redis:
+                condition: service_healthy
+            db:
+                condition: service_healthy
+            skywalking-oap:
+                condition: service_healthy
         networks:
             - turing
         environment:

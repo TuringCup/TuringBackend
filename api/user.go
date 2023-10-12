@@ -8,6 +8,7 @@ import (
 
 	"github.com/TuringCup/TuringBackend/pkg/errors"
 	"github.com/TuringCup/TuringBackend/pkg/utils/jwt"
+	"github.com/TuringCup/TuringBackend/pkg/utils/logger"
 	"github.com/TuringCup/TuringBackend/service"
 	"github.com/TuringCup/TuringBackend/types"
 	"github.com/gin-gonic/gin"
@@ -16,8 +17,10 @@ import (
 func UserRegisterHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var request types.RegisterRequest
+		defer logger.Logger.Sync()
 		if err := ctx.Bind(&request); err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
+			logger.Logger.Sugar().Error(err)
 			ctx.JSON(
 				http.StatusOK,
 				types.RegisterResponse{
@@ -27,7 +30,9 @@ func UserRegisterHandler() gin.HandlerFunc {
 			)
 			return
 		}
+		logger.Logger.Sugar().Info(request)
 		response, err := service.UserReigster(ctx.Request.Context(), &request)
+		logger.Logger.Sugar().Info(response)
 		if err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
 		}
@@ -38,8 +43,10 @@ func UserRegisterHandler() gin.HandlerFunc {
 func UserLoginHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.LoginRequest
+		defer logger.Logger.Sync()
 		if err := ctx.Bind(&req); err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
+			logger.Logger.Sugar().Error(err)
 			resp := types.LoginResponse{
 				ErrorCode: errors.InvalidParams,
 				ErrorMsg:  errors.GetMsg(errors.InvalidParams),
@@ -47,7 +54,9 @@ func UserLoginHandler() gin.HandlerFunc {
 			ctx.JSON(http.StatusOK, resp)
 			return
 		}
+		logger.Logger.Sugar().Info(req)
 		response, err := service.UserLogin(ctx, &req)
+		logger.Logger.Sugar().Info(response)
 		if err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
 			ctx.JSON(http.StatusOK, response)
@@ -60,15 +69,19 @@ func UserLoginHandler() gin.HandlerFunc {
 func UserRegisterValidCodeHandler() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var req types.ValidCodeRequest
+		defer logger.Logger.Sync()
 		if err := ctx.Bind(&req); err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
+			logger.Logger.Sugar().Error(err)
 			resp := types.ValidCodeResponse{
 				ErrorCode: errors.ValidCodeError,
 				ErrorMsg:  errors.GetMsg(errors.ValidCodeError),
 			}
 			ctx.JSON(http.StatusOK, resp)
 		}
+		logger.Logger.Sugar().Info(req)
 		response, err := service.UserReigsterSendValidCode(ctx, &req)
+		logger.Logger.Sugar().Info(response)
 		if err != nil {
 			fmt.Fprintln(gin.DefaultErrorWriter, err)
 		}
