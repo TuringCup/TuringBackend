@@ -26,8 +26,8 @@ func ValidTokenHandler() gin.HandlerFunc {
 		if err != nil {
 			logger.Logger.Error("parse token err", zap.Error(err))
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.Forbidden,
-				"ErrorMsg":  errors.GetMsg(errors.Forbidden) + " parse token err",
+				"errorCode": errors.Forbidden,
+				"errorMsg":  errors.GetMsg(errors.Forbidden) + " parse token err",
 			})
 			return
 		}
