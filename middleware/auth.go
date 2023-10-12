@@ -11,7 +11,8 @@ import (
 
 func AuthMiddleWare() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		token := ctx.Query("token")
+		// token := ctx.Query("token")
+		token := ctx.Request.FormValue("token")
 		client_ip := ctx.ClientIP()
 		claim, err := jwt.ParseToken(token)
 		if err != nil {

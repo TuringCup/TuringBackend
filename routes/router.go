@@ -37,7 +37,8 @@ func NewRouter(r *gin.Engine) {
 		api.GET("/ping", func(ctx *gin.Context) {
 			ctx.JSON(http.StatusOK, "success")
 		})
-
+		api.GET("validtoken", Api.ValidTokenHandler())
+		api.POST("validtoken", Api.ValidTokenHandler())
 		user := api.Group("/user")
 		{
 			user.GET("/login", Api.UserLoginHandler())
