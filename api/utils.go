@@ -20,7 +20,7 @@ func ValidTokenHandler() gin.HandlerFunc {
 		// ctx.JSON(http.StatusOK, response)
 		defer logger.Logger.Sync()
 		token := ctx.Request.FormValue("token")
-		logger.Logger.Sugar().Info("valid token", zap.Any("token", token))
+		logger.Logger.Sugar().Info("valid token", token)
 		client_ip := ctx.ClientIP()
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
