@@ -48,7 +48,7 @@ func ValidTokenHandler() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusForbidden, gin.H{
+		ctx.JSON(http.StatusOK, gin.H{
 			"errorCode": errors.SUCCESS,
 			"errorMsg":  errors.GetMsg(errors.SUCCESS),
 		})
