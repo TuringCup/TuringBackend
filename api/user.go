@@ -169,14 +169,17 @@ func UserUpdateHandler() gin.HandlerFunc {
 func UserUploadFile() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		file, err := ctx.FormFile("file")
+		logger.Logger.Sugar().Info(file)
+		defer logger.Logger.Sync()
 		if err != nil {
+			logger.Logger.Sugar().Error(err)
 			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
 				ErrorMsg:  "上传失败",
 				ErrorCode: errors.ERROR,
 			})
 			return
 		}
-		fmt.Println(file.Size)
+		logger.Logger.Sugar().Info(file.Size)
 		// 保证文件大小小于16MB
 		if file.Size > (1 << 24) {
 			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
@@ -185,7 +188,17 @@ func UserUploadFile() gin.HandlerFunc {
 			})
 			return
 		}
+		if filepath.Ext(file.Filename) != ".zip" {
+			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
+				ErrorMsg:  "上传失败,文件格式错误",
+				ErrorCode: errors.ERROR,
+			})
+			return
+		}
 		token := ctx.Query("token")
+		if token == "" {
+			token = ctx.Request.FormValue("token")
+		}
 		claim, err := jwt.ParseToken(token)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, types.UploadFileResponse{
@@ -195,10 +208,12 @@ func UserUploadFile() gin.HandlerFunc {
 			return
 		}
 		filename := claim.Username + "_" + strconv.Itoa(claim.ID) + filepath.Ext(file.Filename)
+
 		fmt.Printf("%v\n", file.Filename)
 		fmt.Printf("%v\n", claim)
 		fmt.Println(filename)
 		ctx.SaveUploadedFile(file, "./data/userfiles/"+filename)
+		logger.Logger.Sugar().Info(filename, " saved")
 		ctx.JSON(http.StatusOK, types.UploadFileResponse{
 			ErrorMsg:  "上传成功",
 			ErrorCode: errors.SUCCESS,
