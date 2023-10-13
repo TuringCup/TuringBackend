@@ -34,23 +34,23 @@ func ValidTokenHandler() gin.HandlerFunc {
 		if claim.IP != client_ip {
 			logger.Logger.Error("parse token err", zap.Error(err))
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.Forbidden,
-				"ErrorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
+				"errorCode": errors.Forbidden,
+				"errorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
 			})
 			return
 		}
 		if claim.ExpiresAt < time.Now().Unix() {
 			logger.Logger.Error("parse token err", zap.Error(err))
 			ctx.JSON(http.StatusForbidden, gin.H{
-				"ErrorCode": errors.Forbidden,
-				"ErrorMsg":  errors.GetMsg(errors.Forbidden) + " please login",
+				"errorCode": errors.Forbidden,
+				"errorMsg":  errors.GetMsg(errors.Forbidden) + " please login",
 			})
 			return
 		}
 		logger.Logger.Info("parse token err", zap.Error(err))
 		ctx.JSON(http.StatusForbidden, gin.H{
-			"ErrorCode": errors.SUCCESS,
-			"ErrorMsg":  errors.GetMsg(errors.SUCCESS),
+			"errorCode": errors.SUCCESS,
+			"errorMsg":  errors.GetMsg(errors.SUCCESS),
 		})
 	}
 }
