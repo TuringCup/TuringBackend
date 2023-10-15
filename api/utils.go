@@ -22,7 +22,9 @@ func ValidTokenHandler() gin.HandlerFunc {
 		token := ctx.Request.FormValue("token")
 		logger.Logger.Sugar().Info("valid token", token)
 		client_ip := ctx.ClientIP()
+		logger.Logger.Sugar().Info(client_ip)
 		claim, err := jwt.ParseToken(token)
+		logger.Logger.Sugar().Info(claim)
 		if err != nil {
 			logger.Logger.Error("parse token err", zap.Error(err))
 			ctx.JSON(http.StatusForbidden, gin.H{
@@ -32,7 +34,7 @@ func ValidTokenHandler() gin.HandlerFunc {
 			return
 		}
 		if claim.IP != client_ip {
-			logger.Logger.Error("parse token err", zap.Error(err))
+			logger.Logger.Sugar().Error(claim.IP, client_ip)
 			ctx.JSON(http.StatusForbidden, gin.H{
 				"errorCode": errors.Forbidden,
 				"errorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
@@ -40,7 +42,7 @@ func ValidTokenHandler() gin.HandlerFunc {
 			return
 		}
 		if claim.ExpiresAt < time.Now().Unix() {
-			logger.Logger.Error("parse token err", zap.Error(err))
+			logger.Logger.Sugar().Warn("expires")
 			ctx.JSON(http.StatusForbidden, gin.H{
 				"errorCode": errors.Forbidden,
 				"errorMsg":  errors.GetMsg(errors.Forbidden) + " please login",
