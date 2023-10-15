@@ -14,7 +14,6 @@ func AuthMiddleWare() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		// token := ctx.Query("token")
 		token := ctx.Request.FormValue("token")
-		client_ip := ctx.ClientIP()
 		claim, err := jwt.ParseToken(token)
 		defer logger.Logger.Sync()
 		logger.Logger.Sugar().Info(token)
@@ -24,14 +23,6 @@ func AuthMiddleWare() gin.HandlerFunc {
 			ctx.JSON(http.StatusForbidden, gin.H{
 				"errorCode": errors.Forbidden,
 				"errorMsg":  errors.GetMsg(errors.Forbidden),
-			})
-			ctx.Abort()
-			return
-		}
-		if claim.IP != client_ip {
-			ctx.JSON(http.StatusForbidden, gin.H{
-				"errorCode": errors.Forbidden,
-				"errorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
 			})
 			ctx.Abort()
 			return
