@@ -38,5 +38,5 @@ func main() {
 	// r.Use(middleware.CorsMiddle())
 	routes.NewRouter(r)
 	ginpprof.Wrap(r)
-	r.Run(config.Conf.System.Host + ":" + config.Conf.System.Port)
+	r.RunTLS(config.Conf.System.Host+":"+config.Conf.System.Port, "./config/https/lird.top_bundle.pem", "config/https/lird.top.key")
 }
