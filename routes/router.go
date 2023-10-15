@@ -16,7 +16,7 @@ func NewRouter(r *gin.Engine) {
 		{
 			user.PUT("/:id", Api.UserUpdateHandler())
 			user.GET("/:id", Api.UserFindHandler())
-			user.POST("/upload", Api.UserUploadFile())
+			user.POST("/upload", middleware.CorsMiddle(), Api.UserUploadFile())
 		}
 		race := authed.Group("/race")
 		{
