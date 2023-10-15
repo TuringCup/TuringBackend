@@ -33,14 +33,7 @@ func ValidTokenHandler() gin.HandlerFunc {
 			})
 			return
 		}
-		if claim.IP != client_ip {
-			logger.Logger.Sugar().Error(claim.IP, client_ip)
-			ctx.JSON(http.StatusForbidden, gin.H{
-				"errorCode": errors.Forbidden,
-				"errorMsg":  errors.GetMsg(errors.Forbidden) + " ip changed",
-			})
-			return
-		}
+
 		if claim.ExpiresAt < time.Now().Unix() {
 			logger.Logger.Sugar().Warn("expires")
 			ctx.JSON(http.StatusForbidden, gin.H{
