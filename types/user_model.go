@@ -23,6 +23,7 @@ type RegisterRequest struct {
 	School   string `form:"school"`
 	SchoolId string `form:"schoolId"`
 	Phone    string `form:"phone"`
+	RealName string `form:"name"`
 	// ValidCode string `form:"validcode"`
 }
 

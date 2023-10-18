@@ -11,6 +11,7 @@ import (
 	"github.com/TuringCup/TuringBackend/pkg/email"
 	errs "github.com/TuringCup/TuringBackend/pkg/errors"
 	"github.com/TuringCup/TuringBackend/pkg/utils/jwt"
+	"github.com/TuringCup/TuringBackend/pkg/utils/logger"
 	"github.com/TuringCup/TuringBackend/repository/cache"
 	"github.com/TuringCup/TuringBackend/repository/db/dao"
 	"github.com/TuringCup/TuringBackend/repository/db/model"
@@ -49,7 +50,8 @@ func UserReigsterSendValidCode(ctx context.Context, req *types.ValidCodeRequest)
 
 func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interface{}, err error) {
 	userdao := dao.NewUserDao(ctx)
-
+	defer logger.Logger.Sync()
+	logger.Logger.Sugar().Info(req)
 	// 检查用户名是否已经被注册
 	_, exist, err := userdao.ExistOrNotByUserName(req.Username)
 	if err != nil {
@@ -87,6 +89,25 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 		return
 	}
 
+	_, exist, err = userdao.ExistOrNotBySchoolID(req.SchoolId)
+	if err != nil {
+		fmt.Fprintln(gin.DefaultErrorWriter, err)
+		resp = types.RegisterResponse{
+			ErrorCode: errs.RegisterFailed,
+			ErrorMsg:  errs.GetMsg(errs.RegisterFailed),
+		}
+		return
+	}
+
+	if exist {
+		err = errors.New("学号已经被注册")
+		resp = types.RegisterResponse{
+			ErrorCode: errs.RegisterFailed,
+			ErrorMsg:  errs.GetMsg(errs.RegisterFailed) + " 学号已经被注册",
+		}
+		return
+	}
+
 	// // 校验邮箱验证码
 	// err = cache.CheckValidCode(req.ValidCode)
 
@@ -116,6 +137,7 @@ func UserReigster(ctx context.Context, req *types.RegisterRequest) (resp interfa
 		School:   req.School,
 		SchoolID: req.SchoolId,
 		Phone:    req.Phone,
+		RealName: req.RealName,
 	}
 
 	// 创建用户
